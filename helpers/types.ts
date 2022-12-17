@@ -270,6 +270,7 @@ export interface iAssetBase<T> {
   xSUSHI: T;
   WAVAX: T;
   WTLOS: T;
+  STLOS: T;
   WBNB: T;
   WFTM: T;
 }
@@ -345,7 +346,17 @@ export type iAvalanchePoolAssets<T> = Pick<
 
 export type iTelosPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'WETH' | 'USDT' | 'KARMA' | 'WBTC' | 'WAVAX' | 'USDC' | 'WTLOS' | 'WBNB' | 'WMATIC' | 'WFTM'
+  | 'WETH'
+  | 'USDT'
+  | 'KARMA'
+  | 'WBTC'
+  | 'WAVAX'
+  | 'USDC'
+  | 'WTLOS'
+  | 'WBNB'
+  | 'WMATIC'
+  | 'WFTM'
+  | 'STLOS'
 >;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iOmniDexPoolAssets<T>;
@@ -397,6 +408,7 @@ export enum TokenContractId {
   xSUSHI = 'xSUSHI',
   WAVAX = 'WAVAX',
   WTLOS = 'WTLOS',
+  STLOS = 'STLOS',
   WBNB = 'WBNB',
   WFTM = 'WFTM',
 }

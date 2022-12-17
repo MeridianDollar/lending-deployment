@@ -63,6 +63,9 @@ export const CommonsConfig: ICommonConfiguration = {
     WTLOS: {
       borrowRate: oneRay.multipliedBy(0.05).toFixed(), // TODO: fix borrowRate?
     },
+    STLOS: {
+      borrowRate: oneRay.multipliedBy(0.03).toFixed(), // TODO: fix borrowRate?
+    },
   },
   // ----------------
   // COMMON PROTOCOL ADDRESSES ACROSS POOLS
@@ -81,31 +84,31 @@ export const CommonsConfig: ICommonConfiguration = {
   },
   ProviderRegistry: {
     [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '0x2a93677B0cD0c661C95258D660BFFBDFE7e82e3c',
+    [eTelosNetwork.telos_testnet]: '0x5eaB99547ed5915802ddd50c8891EC52dec25587',
   },
   ProviderRegistryOwner: {
     [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '0x365212Ecc6715A561C1ec128FCc3AEd9DBF3c404',
+    [eTelosNetwork.telos_testnet]: '0x4a1E81cEb5Bc075f4aeE1B5EDcdb460abe3a3D3A',
   },
   LendingRateOracle: {
     [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '0xcCE91b7656ae0Bd43bF9c5D4DBf1B0064f037383',
+    [eTelosNetwork.telos_testnet]: '',
   },
   LendingPoolCollateralManager: {
     [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '0x8a3e482a4575FD00c6222873992dE1f82B9b8791',
+    [eTelosNetwork.telos_testnet]: '',
   },
   LendingPoolConfigurator: {
     [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '0xfa50D90aC1de87d3A6F3cc4605058F71aD272Ba1',
+    [eTelosNetwork.telos_testnet]: '',
   },
   LendingPool: {
     [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '0x27aa06D0c9B48adce4B449763441602D03f49F88',
+    [eTelosNetwork.telos_testnet]: '0xdF6C45b72f506bD21F3DC810412b6716c8c64977',
   },
   WethGateway: {
     [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '0x66094EEb44f328Ce79083C5233847813f43544BC',
+    [eTelosNetwork.telos_testnet]: '',
   },
   TokenDistributor: {
     [eTelosNetwork.telos_mainnet]: '',
@@ -113,11 +116,11 @@ export const CommonsConfig: ICommonConfiguration = {
   },
   OmniDexOracle: {
     [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '0xB95b6C20E28C0Cd9E4C0B1628EB3E9c48d674AEe',
+    [eTelosNetwork.telos_testnet]: '',
   },
   FallbackOracle: {
     [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '0x1996E0dbB32C8f11C3e056942a5828Cc00ef2CcA',
+    [eTelosNetwork.telos_testnet]: '',
   },
   ChainlinkAggregator: {
     [eTelosNetwork.telos_mainnet]: {
@@ -166,7 +169,7 @@ export const CommonsConfig: ICommonConfiguration = {
   },
   ReserveFactorTreasuryAddress: {
     [eTelosNetwork.telos_mainnet]: '0x1e61a5c911Ab51F98A8dFBE90C0aa42e355885C5',
-    [eTelosNetwork.telos_testnet]: '0x365212Ecc6715A561C1ec128FCc3AEd9DBF3c404', // Self-controlled EOA for testing
+    [eTelosNetwork.telos_testnet]: '0x4a1E81cEb5Bc075f4aeE1B5EDcdb460abe3a3D3A', // Self-controlled EOA for testing
   },
   IncentivesController: {
     [eTelosNetwork.telos_mainnet]: ZERO_ADDRESS,

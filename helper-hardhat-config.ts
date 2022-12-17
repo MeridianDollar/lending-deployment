@@ -73,8 +73,8 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
   [eXDaiNetwork.xdai]: 1 * GWEI,
   [eAvalancheNetwork.avalanche]: 225 * GWEI,
   [eAvalancheNetwork.fuji]: 85 * GWEI,
-  [eTelosNetwork.telos_mainnet]: 85 * GWEI,
-  [eTelosNetwork.telos_testnet]: 85 * GWEI,
+  [eTelosNetwork.telos_mainnet]: 503807803686,
+  [eTelosNetwork.telos_testnet]: 503807803686,
 };
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {

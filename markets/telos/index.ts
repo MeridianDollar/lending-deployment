@@ -9,6 +9,7 @@ import {
   strategyWBTC,
   strategyWAVAX,
   strategyWTLOS,
+  strategySTLOS,
   strategyWBNB,
   strategyWMATIC,
   strategyWFTM,
@@ -30,6 +31,7 @@ export const TelosConfig: ITelosConfiguration = {
     WBTC: strategyWBTC,
     WAVAX: strategyWAVAX,
     WTLOS: strategyWTLOS,
+    STLOS: strategySTLOS,
     WBNB: strategyWBNB,
     WMATIC: strategyWMATIC,
     WFTM: strategyWFTM,
@@ -43,6 +45,7 @@ export const TelosConfig: ITelosConfiguration = {
       WBTC: '0xf390830df829cf22c53c8840554b98eafc5dcbc2',
       WAVAX: '0x7c598c96d02398d89fbcb9d41eab3df0c16f227d',
       WTLOS: '0xD102cE6A4dB07D247fcc28F366A623Df0938CA9E',
+      STLOS: '0xB4B01216a5Bc8F1C8A33CD990A1239030E60C905',
     },
     [eTelosNetwork.telos_testnet]: {
       WETH: '0xC2F29fe79a438735186001d6416383C97712cB78', // MintableERC20 token
@@ -55,6 +58,7 @@ export const TelosConfig: ITelosConfiguration = {
       WBTC: '0xA23D982c76d0cc99D5497060E8122953b2B20c88', // MintableERC20 token
       WFTM: '0xA4F1FfA5187Eb1B61c97FA34B871E8C46A6325F0', // MintableERC20 token
       WMATIC: '0xE0DbA1F5aB9ec3e53D7d59859E9a53D6FB251D0a', // MintableERC20 token
+      STLOS: '0xB4B01216a5Bc8F1C8A33CD990A1239030E60C905',
     },
   },
 };

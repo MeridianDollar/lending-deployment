@@ -14,6 +14,18 @@ export const strategyWTLOS: IReserveParams = {
   reserveFactor: '750',
 };
 
+export const strategySTLOS: IReserveParams = {
+  strategy: rateStrategyVolatileOne,
+  baseLTVAsCollateral: '2500',
+  liquidationThreshold: '4000',
+  liquidationBonus: '11000',
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  reserveDecimals: '18',
+  oTokenImpl: eContractid.OToken,
+  reserveFactor: '750',
+};
+
 export const strategyWAVAX: IReserveParams = {
   strategy: rateStrategyVolatileOne,
   baseLTVAsCollateral: '5000',
