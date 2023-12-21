@@ -1,9 +1,9 @@
 import {
-  OmniDexProtocolDataProviderFactory,
+  MeridianProtocolDataProviderFactory,
   OTokenFactory,
   OTokensAndRatesHelperFactory,
-  OmniDexOracleFactory,
-  OmniDexFallbackOracleFactory,
+  MeridianOracleFactory,
+  MeridianFallbackOracleFactory,
   DefaultReserveInterestRateStrategyFactory,
   GenericLogicFactory,
   InitializableAdminUpgradeabilityProxyFactory,
@@ -121,11 +121,11 @@ export const getIErc20Detailed = async (address: tEthereumAddress) =>
     await getFirstSigner()
   );
 
-export const getOmniDexProtocolDataProvider = async (address?: tEthereumAddress) =>
-  await OmniDexProtocolDataProviderFactory.connect(
+export const getMeridianProtocolDataProvider = async (address?: tEthereumAddress) =>
+  await MeridianProtocolDataProviderFactory.connect(
     address ||
       (
-        await getDb().get(`${eContractid.OmniDexProtocolDataProvider}.${DRE.network.name}`).value()
+        await getDb().get(`${eContractid.MeridianProtocolDataProvider}.${DRE.network.name}`).value()
       ).address,
     await getFirstSigner()
   );
@@ -380,20 +380,20 @@ export const getLendingPoolCollateralManager = async (address?: tEthereumAddress
 export const getAddressById = async (id: string): Promise<tEthereumAddress | undefined> =>
   (await getDb().get(`${id}.${DRE.network.name}`).value())?.address || undefined;
 
-export const getOmniDexOracle = async (address?: tEthereumAddress) =>
-  await OmniDexOracleFactory.connect(
+export const getMeridianOracle = async (address?: tEthereumAddress) =>
+  await MeridianOracleFactory.connect(
     address ||
       (
-        await getDb().get(`${eContractid.OmniDexOracle}.${DRE.network.name}`).value()
+        await getDb().get(`${eContractid.MeridianOracle}.${DRE.network.name}`).value()
       ).address,
     await getFirstSigner()
   );
 
-export const getOmniDexFallbackOracle = async (address?: tEthereumAddress) =>
-  await OmniDexFallbackOracleFactory.connect(
+export const getMeridianFallbackOracle = async (address?: tEthereumAddress) =>
+  await MeridianFallbackOracleFactory.connect(
     address ||
       (
-        await getDb().get(`${eContractid.OmniDexFallbackOracle}.${DRE.network.name}`).value()
+        await getDb().get(`${eContractid.MeridianFallbackOracle}.${DRE.network.name}`).value()
       ).address,
     await getFirstSigner()
   );

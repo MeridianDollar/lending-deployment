@@ -5,7 +5,7 @@ import {
   IReserveParams,
   tEthereumAddress,
 } from './types';
-import { OmniDexProtocolDataProvider } from '../types/OmniDexProtocolDataProvider';
+import { MeridianProtocolDataProvider } from '../types/MeridianProtocolDataProvider';
 import { chunk, getDb, waitForTx, getOTokenExtraParams } from './misc-utils';
 import {
   getOToken,
@@ -185,7 +185,7 @@ export const getPairsTokenAggregator = (
 export const configureReservesByHelper = async (
   reservesParams: iMultiPoolsAssets<IReserveParams>,
   tokenAddresses: { [symbol: string]: tEthereumAddress },
-  helpers: OmniDexProtocolDataProvider,
+  helpers: MeridianProtocolDataProvider,
   admin: tEthereumAddress
 ) => {
   const addressProvider = await getLendingPoolAddressesProvider();

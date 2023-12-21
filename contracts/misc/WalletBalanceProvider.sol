@@ -14,10 +14,10 @@ import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
 
 /**
  * @title WalletBalanceProvider contract
- * @author OmniDex, influenced by https://github.com/wbobeirne/eth-balance-checker/blob/master/contracts/BalanceChecker.sol
+ * @author Meridian, influenced by https://github.com/wbobeirne/eth-balance-checker/blob/master/contracts/BalanceChecker.sol
  * @notice Implements a logic of getting multiple tokens balance for one user address
- * @dev NOTE: THIS CONTRACT IS NOT USED WITHIN THE OMNIDEX PROTOCOL. It's an accessory contract used to reduce the number of calls
- * towards the blockchain from the OmniDex backend.
+ * @dev NOTE: THIS CONTRACT IS NOT USED WITHIN THE Meridian PROTOCOL. It's an accessory contract used to reduce the number of calls
+ * towards the blockchain from the Meridian backend.
  **/
 contract WalletBalanceProvider {
   using Address for address payable;
@@ -57,11 +57,10 @@ contract WalletBalanceProvider {
    * @param tokens The list of tokens
    * @return And array with the concatenation of, for each user, his/her balances
    **/
-  function batchBalanceOf(address[] calldata users, address[] calldata tokens)
-    external
-    view
-    returns (uint256[] memory)
-  {
+  function batchBalanceOf(
+    address[] calldata users,
+    address[] calldata tokens
+  ) external view returns (uint256[] memory) {
     uint256[] memory balances = new uint256[](users.length * tokens.length);
 
     for (uint256 i = 0; i < users.length; i++) {
@@ -76,11 +75,10 @@ contract WalletBalanceProvider {
   /**
     @dev provides balances of user wallet for all reserves available on the pool
     */
-  function getUserWalletBalances(address provider, address user)
-    external
-    view
-    returns (address[] memory, uint256[] memory)
-  {
+  function getUserWalletBalances(
+    address provider,
+    address user
+  ) external view returns (address[] memory, uint256[] memory) {
     ILendingPool pool = ILendingPool(ILendingPoolAddressesProvider(provider).getLendingPool());
 
     address[] memory reserves = pool.getReservesList();
@@ -93,8 +91,9 @@ contract WalletBalanceProvider {
     uint256[] memory balances = new uint256[](reservesWithEth.length);
 
     for (uint256 j = 0; j < reserves.length; j++) {
-      DataTypes.ReserveConfigurationMap memory configuration =
-        pool.getConfiguration(reservesWithEth[j]);
+      DataTypes.ReserveConfigurationMap memory configuration = pool.getConfiguration(
+        reservesWithEth[j]
+      );
 
       (bool isActive, , , ) = configuration.getFlagsMemory();
 

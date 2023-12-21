@@ -38,13 +38,13 @@ makeSuite('OToken: underlying delegation', (testEnv: TestEnv) => {
       [pool.address, delegationERC20.address, await getTreasuryAddress(AmmConfig), ZERO_ADDRESS, 'aDEL', 'aDEL'],
       false
     );
-    
+
     //await delegationOToken.initialize(pool.address, ZERO_ADDRESS, delegationERC20.address, ZERO_ADDRESS, '18', 'aDEL', 'aDEL');
 
     console.log((await delegationOToken.decimals()).toString());
   });
 
-  it('Tries to delegate with the caller not being the OmniDex admin', async () => {
+  it('Tries to delegate with the caller not being the Meridian admin', async () => {
     const { users } = testEnv;
 
     await expect(

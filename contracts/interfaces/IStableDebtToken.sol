@@ -2,13 +2,13 @@
 pragma solidity 0.6.12;
 
 import {IInitializableDebtToken} from './IInitializableDebtToken.sol';
-import {IOmniDexIncentivesController} from './IOmniDexIncentivesController.sol';
+import {IMeridianIncentivesController} from './IMeridianIncentivesController.sol';
 
 /**
  * @title IStableDebtToken
  * @notice Defines the interface for the stable debt token
  * @dev It does not inherit from IERC20 to save in code size
- * @author OmniDex
+ * @author Meridian
  **/
 
 interface IStableDebtToken is IInitializableDebtToken {
@@ -99,15 +99,7 @@ interface IStableDebtToken is IInitializableDebtToken {
   /**
    * @dev Returns the principal, the total supply and the average stable rate
    **/
-  function getSupplyData()
-    external
-    view
-    returns (
-      uint256,
-      uint256,
-      uint256,
-      uint40
-    );
+  function getSupplyData() external view returns (uint256, uint256, uint256, uint40);
 
   /**
    * @dev Returns the timestamp of the last update of the total supply
@@ -129,7 +121,7 @@ interface IStableDebtToken is IInitializableDebtToken {
   /**
    * @dev Returns the address of the incentives controller contract
    **/
-  function getIncentivesController() external view returns (IOmniDexIncentivesController);
+  function getIncentivesController() external view returns (IMeridianIncentivesController);
 
-  function setIncentivesController(IOmniDexIncentivesController incentivesController) external;
+  function setIncentivesController(IMeridianIncentivesController incentivesController) external;
 }

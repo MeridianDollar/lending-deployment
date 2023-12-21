@@ -4,7 +4,7 @@ import {
   tEthereumAddress,
   eContractid,
   tStringTokenSmallUnits,
-  OmniDexPools,
+  MeridianPools,
   TokenContractId,
   iMultiPoolsAssets,
   IReserveParams,
@@ -16,11 +16,11 @@ import { MockContract } from 'ethereum-waffle';
 import { ConfigNames, getReservesConfigByPool, loadPoolConfig } from './configuration';
 import { getFirstSigner } from './contracts-getters';
 import {
-  OmniDexProtocolDataProviderFactory,
+  MeridianProtocolDataProviderFactory,
   OTokenFactory,
   OTokensAndRatesHelperFactory,
-  OmniDexOracleFactory,
-  OmniDexFallbackOracleFactory,
+  MeridianOracleFactory,
+  MeridianFallbackOracleFactory,
   DefaultReserveInterestRateStrategyFactory,
   DelegationAwareOTokenFactory,
   InitializableAdminUpgradeabilityProxyFactory,
@@ -122,11 +122,11 @@ export const deployUiPoolDataProviderV2V3 = async (
   );
 
 export const deployUiPoolDataProvider = async (
-  [incentivesController, omniDexOracle]: [tEthereumAddress, tEthereumAddress],
+  [incentivesController, meridianOracle]: [tEthereumAddress, tEthereumAddress],
   verify?: boolean
 ) => {
   const id = eContractid.UiPoolDataProvider;
-  const args: string[] = [incentivesController, omniDexOracle];
+  const args: string[] = [incentivesController, meridianOracle];
   const instance = await deployContract<UiPoolDataProvider>(id, args);
   if (verify) {
     await verifyContract(id, instance, args);
@@ -223,7 +223,7 @@ export const deployValidationLogic = async (
   return withSaveAndVerify(validationLogic, eContractid.ValidationLogic, [], verify);
 };
 
-export const deployOmniDexLibraries = async (
+export const deployMeridianLibraries = async (
   verify?: boolean
 ): Promise<LendingPoolLibraryAddresses> => {
   const reserveLogic = await deployReserveLogicLibrary(verify);
@@ -248,7 +248,7 @@ export const deployOmniDexLibraries = async (
 };
 
 export const deployLendingPool = async (verify?: boolean) => {
-  const libraries = await deployOmniDexLibraries(verify);
+  const libraries = await deployMeridianLibraries(verify);
   const lendingPoolImpl = await new LendingPoolFactory(libraries, await getFirstSigner()).deploy();
   await insertContractAddressInDb(eContractid.LendingPoolImpl, lendingPoolImpl.address);
   return withSaveAndVerify(lendingPoolImpl, eContractid.LendingPool, [], verify);
@@ -278,21 +278,21 @@ export const deployMockAggregator = async (price: tStringTokenSmallUnits, verify
     verify
   );
 
-export const deployOmniDexOracle = async (
+export const deployMeridianOracle = async (
   args: [tEthereumAddress[], tEthereumAddress[], tEthereumAddress, tEthereumAddress, string],
   verify?: boolean
 ) =>
   withSaveAndVerify(
-    await new OmniDexOracleFactory(await getFirstSigner()).deploy(...args),
-    eContractid.OmniDexOracle,
+    await new MeridianOracleFactory(await getFirstSigner()).deploy(...args),
+    eContractid.MeridianOracle,
     args,
     verify
   );
 
-export const deployOmniDexFallbackOracle = async (verify?: boolean) =>
+export const deployMeridianFallbackOracle = async (verify?: boolean) =>
   withSaveAndVerify(
-    await new OmniDexFallbackOracleFactory(await getFirstSigner()).deploy(),
-    eContractid.OmniDexFallbackOracle,
+    await new MeridianFallbackOracleFactory(await getFirstSigner()).deploy(),
+    eContractid.MeridianFallbackOracle,
     [],
     verify
   );
@@ -340,13 +340,13 @@ export const deployWalletBalancerProvider = async (verify?: boolean) =>
     verify
   );
 
-export const deployOmniDexProtocolDataProvider = async (
+export const deployMeridianProtocolDataProvider = async (
   addressesProvider: tEthereumAddress,
   verify?: boolean
 ) =>
   withSaveAndVerify(
-    await new OmniDexProtocolDataProviderFactory(await getFirstSigner()).deploy(addressesProvider),
-    eContractid.OmniDexProtocolDataProvider,
+    await new MeridianProtocolDataProviderFactory(await getFirstSigner()).deploy(addressesProvider),
+    eContractid.MeridianProtocolDataProvider,
     [addressesProvider],
     verify
   );
@@ -514,7 +514,7 @@ export const deployDelegationAwareOTokenImpl = async (verify: boolean) =>
 export const deployAllMockTokens = async (verify?: boolean) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 } = {};
 
-  const protoConfigData = getReservesConfigByPool(OmniDexPools.proto);
+  const protoConfigData = getReservesConfigByPool(MeridianPools.proto);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     let decimals = '18';

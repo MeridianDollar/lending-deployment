@@ -78,13 +78,13 @@
 //         expect(result['3']).to.be.eq(daiUsdValue);
 //       });
 //       it('should work correctly with different decimals', async () => {
-//         const { karma, usdc, uniswapLiquiditySwapAdapter, oracle } = testEnv;
+//         const { stlos, usdc, uniswapLiquiditySwapAdapter, oracle } = testEnv;
 
 //         const amountIn = parseEther('10');
 //         const flashloanPremium = amountIn.mul(9).div(10000);
 //         const amountToSwap = amountIn.sub(flashloanPremium);
 
-//         const karmaPrice = await oracle.getAssetPrice(karma.address);
+//         const karmaPrice = await oracle.getAssetPrice(stlos.address);
 //         const usdcPrice = await oracle.getAssetPrice(usdc.address);
 //         const usdPrice = await oracle.getAssetPrice(USD_ADDRESS);
 
@@ -112,14 +112,14 @@
 
 //         await mockUniswapRouter.setAmountOut(
 //           amountToSwap,
-//           karma.address,
+//           stlos.address,
 //           usdc.address,
 //           expectedUSDCAmount
 //         );
 
 //         const result = await uniswapLiquiditySwapAdapter.getAmountsOut(
 //           amountIn,
-//           karma.address,
+//           stlos.address,
 //           usdc.address
 //         );
 
@@ -177,13 +177,13 @@
 //         expect(result['3']).to.be.eq(daiUsdValue);
 //       });
 //       it('should work correctly with different decimals', async () => {
-//         const { karma, usdc, uniswapLiquiditySwapAdapter, oracle } = testEnv;
+//         const { stlos, usdc, uniswapLiquiditySwapAdapter, oracle } = testEnv;
 
 //         const amountIn = parseEther('10');
 //         const flashloanPremium = amountIn.mul(9).div(10000);
 //         const amountToSwap = amountIn.add(flashloanPremium);
 
-//         const karmaPrice = await oracle.getAssetPrice(karma.address);
+//         const karmaPrice = await oracle.getAssetPrice(stlos.address);
 //         const usdcPrice = await oracle.getAssetPrice(usdc.address);
 //         const usdPrice = await oracle.getAssetPrice(USD_ADDRESS);
 
@@ -209,11 +209,11 @@
 //           .mul(usdPrice)
 //           .div(parseEther('1'));
 
-//         await mockUniswapRouter.setAmountIn(amountOut, karma.address, usdc.address, amountIn);
+//         await mockUniswapRouter.setAmountIn(amountOut, stlos.address, usdc.address, amountIn);
 
 //         const result = await uniswapLiquiditySwapAdapter.getAmountsIn(
 //           amountOut,
-//           karma.address,
+//           stlos.address,
 //           usdc.address
 //         );
 

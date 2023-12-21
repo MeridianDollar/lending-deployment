@@ -1,5 +1,5 @@
 import {
-  OmniDexPools,
+  MeridianPools,
   iMultiPoolsAssets,
   IReserveParams,
   PoolConfiguration,
@@ -7,13 +7,13 @@ import {
   IBaseConfiguration,
 } from './types';
 import { getEthersSignersAddresses, getParamPerPool } from './contracts-helpers';
-import OmniDexConfig from '../markets/omnidex';
+// import MeridianConfig from '../markets/meridian';
 import MaticConfig from '../markets/matic';
 import AvalancheConfig from '../markets/avalanche';
 import TelosConfig from '../markets/telos';
 import AmmConfig from '../markets/amm';
 
-import { CommonsConfig } from '../markets/omnidex/commons';
+// import { CommonsConfig } from '../markets/meridian/commons';
 import { DRE, filterMapBy } from './misc-utils';
 import { tEthereumAddress } from './types';
 import { getParamPerNetwork } from './contracts-helpers';
@@ -21,7 +21,7 @@ import { deployWETHMocked } from './contracts-deployments';
 
 export enum ConfigNames {
   Commons = 'Commons',
-  OmniDex = 'OmniDex',
+  Meridian = 'Meridian',
   Matic = 'Matic',
   Amm = 'Amm',
   Avalanche = 'Avalanche',
@@ -30,8 +30,8 @@ export enum ConfigNames {
 
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
-    case ConfigNames.OmniDex:
-      return OmniDexConfig;
+    case ConfigNames.Meridian:
+      return MeridianConfig;
     case ConfigNames.Matic:
       return MaticConfig;
     case ConfigNames.Amm:
@@ -55,22 +55,22 @@ export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
 // PROTOCOL PARAMS PER POOL
 // ----------------
 
-export const getReservesConfigByPool = (pool: OmniDexPools): iMultiPoolsAssets<IReserveParams> =>
+export const getReservesConfigByPool = (pool: MeridianPools): iMultiPoolsAssets<IReserveParams> =>
   getParamPerPool<iMultiPoolsAssets<IReserveParams>>(
     {
-      [OmniDexPools.proto]: {
-        ...OmniDexConfig.ReservesConfig,
+      [MeridianPools.proto]: {
+        ...MeridianConfig.ReservesConfig,
       },
-      [OmniDexPools.amm]: {
+      [MeridianPools.amm]: {
         ...AmmConfig.ReservesConfig,
       },
-      [OmniDexPools.matic]: {
+      [MeridianPools.matic]: {
         ...MaticConfig.ReservesConfig,
       },
-      [OmniDexPools.avalanche]: {
+      [MeridianPools.avalanche]: {
         ...AvalancheConfig.ReservesConfig,
       },
-      [OmniDexPools.telos]: {
+      [MeridianPools.telos]: {
         ...TelosConfig.ReservesConfig,
       },
     },

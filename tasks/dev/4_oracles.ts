@@ -1,7 +1,7 @@
 import { task } from 'hardhat/config';
 import {
   deployPriceOracle,
-  deployOmniDexOracle,
+  deployMeridianOracle,
   deployLendingRateOracle,
 } from '../../helpers/contracts-deployments';
 import {
@@ -60,7 +60,7 @@ task('dev:deploy-oracles', 'Deploy oracles for dev environment')
       OracleQuoteCurrency
     );
 
-    await deployOmniDexOracle(
+    await deployMeridianOracle(
       [
         tokens,
         aggregators,

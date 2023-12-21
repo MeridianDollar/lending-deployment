@@ -29,11 +29,11 @@ export const APPROVAL_AMOUNT_LENDING_POOL = '1000000000000000000000000000';
 export const TOKEN_DISTRIBUTOR_PERCENTAGE_BASE = '10000';
 export const MOCK_USD_PRICE_IN_WEI = '5848466240000000';
 export const USD_ADDRESS = '0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96';
-export const KARMA_REFERRAL = '0';
+export const STLOS_REFERRAL = '0';
 
 export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   // Update to USD-based price feeds
-  KARMA: oneEther.multipliedBy('0.003620948469').toFixed(),
+  STLOS: oneEther.multipliedBy('0.003620948469').toFixed(),
   BAT: oneEther.multipliedBy('0.00137893825230').toFixed(),
   BUSD: oneEther.multipliedBy('0.00736484').toFixed(),
   DAI: oneEther.multipliedBy('0.00369068412860').toFixed(),
@@ -55,7 +55,7 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   ZRX: oneEther.multipliedBy('0.001151').toFixed(),
   UniDAIWETH: oneEther.multipliedBy('22.407436').toFixed(),
   UniWBTCWETH: oneEther.multipliedBy('22.407436').toFixed(),
-  UniKARMAWETH: oneEther.multipliedBy('0.003620948469').toFixed(),
+  UniSTLOSWETH: oneEther.multipliedBy('0.003620948469').toFixed(),
   UniBATWETH: oneEther.multipliedBy('22.407436').toFixed(),
   UniDAIUSDC: oneEther.multipliedBy('22.407436').toFixed(),
   UniCRVWETH: oneEther.multipliedBy('22.407436').toFixed(),
@@ -74,7 +74,6 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   xSUSHI: oneEther.multipliedBy('0.00913428586').toFixed(),
   WAVAX: oneEther.multipliedBy('0.006051936629').toFixed(),
   WTLOS: oneEther.multipliedBy('0.006051936629').toFixed(),
-  STLOS: oneEther.multipliedBy('0.006051936629').toFixed(),
   WBNB: oneEther.multipliedBy('0.006051936629').toFixed(),
   WFTM: oneEther.multipliedBy('0.006051936629').toFixed(),
   USD: '5848466240000000',

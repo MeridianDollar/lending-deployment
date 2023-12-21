@@ -7,12 +7,12 @@ import {Errors} from '../libraries/helpers/Errors.sol';
 import {OToken} from './OToken.sol';
 
 /**
- * @title OmniDex OToken enabled to delegate voting power of the underlying asset to a different address
+ * @title Meridian OToken enabled to delegate voting power of the underlying asset to a different address
  * @dev The underlying asset needs to be compatible with the COMP delegation interface
- * @author OmniDex
+ * @author Meridian
  */
 contract DelegationAwareOToken is OToken {
-  modifier onlyPoolAdmin {
+  modifier onlyPoolAdmin() {
     require(
       _msgSender() == ILendingPool(_pool).getAddressesProvider().getPoolAdmin(),
       Errors.CALLER_NOT_POOL_ADMIN

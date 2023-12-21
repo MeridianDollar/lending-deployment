@@ -1,9 +1,9 @@
 import { task } from 'hardhat/config';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
 import {
-  deployOmniDexOracle,
+  deployMeridianOracle,
   deployLendingRateOracle,
-  deployOmniDexFallbackOracle,
+  deployMeridianFallbackOracle,
 } from '../../helpers/contracts-deployments';
 import { setInitialMarketRatesInRatesOracleByHelper } from '../../helpers/oracles-helpers';
 import { ICommonConfiguration, eNetwork, SymbolMap } from '../../helpers/types';
@@ -16,13 +16,13 @@ import {
   getQuoteCurrency,
 } from '../../helpers/configuration';
 import {
-  getOmniDexOracle,
+  getMeridianOracle,
   getLendingPoolAddressesProvider,
   getLendingRateOracle,
   getPairsTokenAggregator,
-  getOmniDexFallbackOracle,
+  getMeridianFallbackOracle,
 } from '../../helpers/contracts-getters';
-import { OmniDexOracle, LendingRateOracle, OmniDexFallbackOracle } from '../../types';
+import { MeridianOracle, LendingRateOracle, MeridianFallbackOracle } from '../../types';
 
 task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -41,7 +41,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
       const lendingRateOracles = getLendingRateOracles(poolConfig);
       const addressesProvider = await getLendingPoolAddressesProvider();
       const admin = await getGenesisPoolAdmin(poolConfig);
-      const omniDexOracleAddress = getParamPerNetwork(poolConfig.OmniDexOracle, network);
+      const meridianOracleAddress = getParamPerNetwork(poolConfig.MeridianOracle, network);
       const lendingRateOracleAddress = getParamPerNetwork(poolConfig.LendingRateOracle, network);
       const fallbackOracleAddress = await getParamPerNetwork(FallbackOracle, network);
       const reserveAssets = await getParamPerNetwork(ReserveAssets, network);
@@ -57,31 +57,31 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         poolConfig.OracleQuoteCurrency
       );
 
-      let omniDexFallbackOracle: OmniDexFallbackOracle;
-      let omniDexOracle: OmniDexOracle;
+      let meridianFallbackOracle: MeridianFallbackOracle;
+      let meridianOracle: MeridianOracle;
       let lendingRateOracle: LendingRateOracle;
 
       if (notFalsyOrZeroAddress(fallbackOracleAddress)) {
-        omniDexFallbackOracle = await getOmniDexFallbackOracle(fallbackOracleAddress);
+        meridianFallbackOracle = await getMeridianFallbackOracle(fallbackOracleAddress);
       } else {
-        omniDexFallbackOracle = await deployOmniDexFallbackOracle(verify);
+        meridianFallbackOracle = await deployMeridianFallbackOracle(verify);
       }
 
-      if (notFalsyOrZeroAddress(omniDexOracleAddress)) {
-        omniDexOracle = await await getOmniDexOracle(omniDexOracleAddress);
-        await waitForTx(await omniDexOracle.setAssetSources(tokens, aggregators));
+      if (notFalsyOrZeroAddress(meridianOracleAddress)) {
+        meridianOracle = await await getMeridianOracle(meridianOracleAddress);
+        await waitForTx(await meridianOracle.setAssetSources(tokens, aggregators));
       } else {
-        omniDexOracle = await deployOmniDexOracle(
+        meridianOracle = await deployMeridianOracle(
           [
             tokens,
             aggregators,
-            omniDexFallbackOracle.address,
+            meridianFallbackOracle.address,
             await getQuoteCurrency(poolConfig),
             poolConfig.OracleQuoteUnit,
           ],
           verify
         );
-        await waitForTx(await omniDexOracle.setAssetSources(tokens, aggregators));
+        await waitForTx(await meridianOracle.setAssetSources(tokens, aggregators));
       }
 
       if (notFalsyOrZeroAddress(lendingRateOracleAddress)) {
@@ -97,11 +97,11 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         );
       }
 
-      console.log('OmniDex Oracle: %s', omniDexOracle.address);
+      console.log('Meridian Oracle: %s', meridianOracle.address);
       console.log('Lending Rate Oracle: %s', lendingRateOracle.address);
 
       // Register the proxy price provider on the addressesProvider
-      await waitForTx(await addressesProvider.setPriceOracle(omniDexOracle.address));
+      await waitForTx(await addressesProvider.setPriceOracle(meridianOracle.address));
       await waitForTx(await addressesProvider.setLendingRateOracle(lendingRateOracle.address));
     } catch (error) {
       if (DRE.network.name.includes('tenderly')) {

@@ -3,7 +3,7 @@ pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
-import {IOmniDexIncentivesController} from '../interfaces/IOmniDexIncentivesController.sol';
+import {IMeridianIncentivesController} from '../interfaces/IMeridianIncentivesController.sol';
 import {IUiIncentiveDataProviderV2} from './interfaces/IUiIncentiveDataProviderV2.sol';
 import {ILendingPool} from '../interfaces/ILendingPool.sol';
 import {IOToken} from '../interfaces/IOToken.sol';
@@ -18,7 +18,10 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
 
   constructor() public {}
 
-  function getFullReservesIncentiveData(ILendingPoolAddressesProvider provider, address user)
+  function getFullReservesIncentiveData(
+    ILendingPoolAddressesProvider provider,
+    address user
+  )
     external
     view
     override
@@ -27,24 +30,19 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
     return (_getReservesIncentivesData(provider), _getUserReservesIncentivesData(provider, user));
   }
 
-  function getReservesIncentivesData(ILendingPoolAddressesProvider provider)
-    external
-    view
-    override
-    returns (AggregatedReserveIncentiveData[] memory)
-  {
+  function getReservesIncentivesData(
+    ILendingPoolAddressesProvider provider
+  ) external view override returns (AggregatedReserveIncentiveData[] memory) {
     return _getReservesIncentivesData(provider);
   }
 
-  function _getReservesIncentivesData(ILendingPoolAddressesProvider provider)
-    private
-    view
-    returns (AggregatedReserveIncentiveData[] memory)
-  {
+  function _getReservesIncentivesData(
+    ILendingPoolAddressesProvider provider
+  ) private view returns (AggregatedReserveIncentiveData[] memory) {
     ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
     address[] memory reserves = lendingPool.getReservesList();
-    AggregatedReserveIncentiveData[] memory reservesIncentiveData =
-      new AggregatedReserveIncentiveData[](reserves.length);
+    AggregatedReserveIncentiveData[]
+      memory reservesIncentiveData = new AggregatedReserveIncentiveData[](reserves.length);
 
     for (uint256 i = 0; i < reserves.length; i++) {
       AggregatedReserveIncentiveData memory reserveIncentiveData = reservesIncentiveData[i];
@@ -53,7 +51,7 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
       DataTypes.ReserveData memory baseData = lendingPool.getReserveData(reserves[i]);
 
       try IStableDebtToken(baseData.oTokenAddress).getIncentivesController() returns (
-        IOmniDexIncentivesController oTokenIncentiveController
+        IMeridianIncentivesController oTokenIncentiveController
       ) {
         if (address(oTokenIncentiveController) != address(0)) {
           address aRewardToken = oTokenIncentiveController.REWARD_TOKEN();
@@ -74,9 +72,7 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
               IERC20Detailed(aRewardToken).decimals(),
               oTokenIncentiveController.PRECISION()
             );
-          } catch (
-            bytes memory /*lowLevelData*/
-          ) {
+          } catch (bytes memory /*lowLevelData*/) {
             (
               uint256 aEmissionPerSecond,
               uint256 aIncentivesLastUpdateTimestamp,
@@ -96,14 +92,12 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
             );
           }
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {
+      } catch (bytes memory /*lowLevelData*/) {
         // Will not get here
       }
 
       try IStableDebtToken(baseData.stableDebtTokenAddress).getIncentivesController() returns (
-        IOmniDexIncentivesController sTokenIncentiveController
+        IMeridianIncentivesController sTokenIncentiveController
       ) {
         if (address(sTokenIncentiveController) != address(0)) {
           address sRewardToken = sTokenIncentiveController.REWARD_TOKEN();
@@ -123,9 +117,7 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
               IERC20Detailed(sRewardToken).decimals(),
               sTokenIncentiveController.PRECISION()
             );
-          } catch (
-            bytes memory /*lowLevelData*/
-          ) {
+          } catch (bytes memory /*lowLevelData*/) {
             (
               uint256 sEmissionPerSecond,
               uint256 sIncentivesLastUpdateTimestamp,
@@ -145,14 +137,12 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
             );
           }
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {
+      } catch (bytes memory /*lowLevelData*/) {
         // Will not get here
       }
 
       try IStableDebtToken(baseData.variableDebtTokenAddress).getIncentivesController() returns (
-        IOmniDexIncentivesController vTokenIncentiveController
+        IMeridianIncentivesController vTokenIncentiveController
       ) {
         if (address(vTokenIncentiveController) != address(0)) {
           address vRewardToken = vTokenIncentiveController.REWARD_TOKEN();
@@ -173,9 +163,7 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
               IERC20Detailed(vRewardToken).decimals(),
               vTokenIncentiveController.PRECISION()
             );
-          } catch (
-            bytes memory /*lowLevelData*/
-          ) {
+          } catch (bytes memory /*lowLevelData*/) {
             (
               uint256 vEmissionPerSecond,
               uint256 vIncentivesLastUpdateTimestamp,
@@ -195,34 +183,30 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
             );
           }
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {
+      } catch (bytes memory /*lowLevelData*/) {
         // Will not get here
       }
     }
     return (reservesIncentiveData);
   }
 
-  function getUserReservesIncentivesData(ILendingPoolAddressesProvider provider, address user)
-    external
-    view
-    override
-    returns (UserReserveIncentiveData[] memory)
-  {
+  function getUserReservesIncentivesData(
+    ILendingPoolAddressesProvider provider,
+    address user
+  ) external view override returns (UserReserveIncentiveData[] memory) {
     return _getUserReservesIncentivesData(provider, user);
   }
 
-  function _getUserReservesIncentivesData(ILendingPoolAddressesProvider provider, address user)
-    private
-    view
-    returns (UserReserveIncentiveData[] memory)
-  {
+  function _getUserReservesIncentivesData(
+    ILendingPoolAddressesProvider provider,
+    address user
+  ) private view returns (UserReserveIncentiveData[] memory) {
     ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
     address[] memory reserves = lendingPool.getReservesList();
 
-    UserReserveIncentiveData[] memory userReservesIncentivesData =
-      new UserReserveIncentiveData[](user != address(0) ? reserves.length : 0);
+    UserReserveIncentiveData[] memory userReservesIncentivesData = new UserReserveIncentiveData[](
+      user != address(0) ? reserves.length : 0
+    );
 
     for (uint256 i = 0; i < reserves.length; i++) {
       DataTypes.ReserveData memory baseData = lendingPool.getReserveData(reserves[i]);
@@ -233,7 +217,7 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
       IUiIncentiveDataProviderV2.UserIncentiveData memory aUserIncentiveData;
 
       try IOToken(baseData.oTokenAddress).getIncentivesController() returns (
-        IOmniDexIncentivesController oTokenIncentiveController
+        IMeridianIncentivesController oTokenIncentiveController
       ) {
         if (address(oTokenIncentiveController) != address(0)) {
           address aRewardToken = oTokenIncentiveController.REWARD_TOKEN();
@@ -248,16 +232,14 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
           aUserIncentiveData.incentiveControllerAddress = address(oTokenIncentiveController);
           aUserIncentiveData.rewardTokenDecimals = IERC20Detailed(aRewardToken).decimals();
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {}
+      } catch (bytes memory /*lowLevelData*/) {}
 
       userReservesIncentivesData[i].oTokenIncentivesUserData = aUserIncentiveData;
 
       UserIncentiveData memory vUserIncentiveData;
 
       try IVariableDebtToken(baseData.variableDebtTokenAddress).getIncentivesController() returns (
-        IOmniDexIncentivesController vTokenIncentiveController
+        IMeridianIncentivesController vTokenIncentiveController
       ) {
         if (address(vTokenIncentiveController) != address(0)) {
           address vRewardToken = vTokenIncentiveController.REWARD_TOKEN();
@@ -272,16 +254,14 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
           vUserIncentiveData.incentiveControllerAddress = address(vTokenIncentiveController);
           vUserIncentiveData.rewardTokenDecimals = IERC20Detailed(vRewardToken).decimals();
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {}
+      } catch (bytes memory /*lowLevelData*/) {}
 
       userReservesIncentivesData[i].vTokenIncentivesUserData = vUserIncentiveData;
 
       UserIncentiveData memory sUserIncentiveData;
 
       try IStableDebtToken(baseData.stableDebtTokenAddress).getIncentivesController() returns (
-        IOmniDexIncentivesController sTokenIncentiveController
+        IMeridianIncentivesController sTokenIncentiveController
       ) {
         if (address(sTokenIncentiveController) != address(0)) {
           address sRewardToken = sTokenIncentiveController.REWARD_TOKEN();
@@ -296,9 +276,7 @@ contract UiIncentiveDataProviderV2 is IUiIncentiveDataProviderV2 {
           sUserIncentiveData.incentiveControllerAddress = address(sTokenIncentiveController);
           sUserIncentiveData.rewardTokenDecimals = IERC20Detailed(sRewardToken).decimals();
         }
-      } catch (
-        bytes memory /*lowLevelData*/
-      ) {}
+      } catch (bytes memory /*lowLevelData*/) {}
 
       userReservesIncentivesData[i].sTokenIncentivesUserData = sUserIncentiveData;
     }

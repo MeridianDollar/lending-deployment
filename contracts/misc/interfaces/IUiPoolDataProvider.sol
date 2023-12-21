@@ -3,7 +3,7 @@ pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import {ILendingPoolAddressesProvider} from '../../interfaces/ILendingPoolAddressesProvider.sol';
-import {IOmniDexIncentivesController} from '../../interfaces/IOmniDexIncentivesController.sol';
+import {IMeridianIncentivesController} from '../../interfaces/IMeridianIncentivesController.sol';
 
 interface IUiPoolDataProvider {
   struct AggregatedReserveData {
@@ -73,14 +73,15 @@ interface IUiPoolDataProvider {
     uint256 emissionEndTimestamp;
   }
 
-  function getReservesList(ILendingPoolAddressesProvider provider)
-    external
-    view
-    returns (address[] memory);
+  function getReservesList(
+    ILendingPoolAddressesProvider provider
+  ) external view returns (address[] memory);
 
-  function incentivesController() external view returns (IOmniDexIncentivesController);
+  function incentivesController() external view returns (IMeridianIncentivesController);
 
-  function getSimpleReservesData(ILendingPoolAddressesProvider provider)
+  function getSimpleReservesData(
+    ILendingPoolAddressesProvider provider
+  )
     external
     view
     returns (
@@ -89,7 +90,10 @@ interface IUiPoolDataProvider {
       uint256 // emission end timestamp
     );
 
-  function getUserReservesData(ILendingPoolAddressesProvider provider, address user)
+  function getUserReservesData(
+    ILendingPoolAddressesProvider provider,
+    address user
+  )
     external
     view
     returns (
@@ -98,7 +102,10 @@ interface IUiPoolDataProvider {
     );
 
   // generic method with full data
-  function getReservesData(ILendingPoolAddressesProvider provider, address user)
+  function getReservesData(
+    ILendingPoolAddressesProvider provider,
+    address user
+  )
     external
     view
     returns (

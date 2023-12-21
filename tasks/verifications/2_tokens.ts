@@ -111,7 +111,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
           lendingPoolProxy.address,
           tokenAddress,
           treasuryAddress,
-          `OmniDex interest bearing ${token}`,
+          `Meridian interest bearing ${token}`,
           `a${token}`,
           ZERO_ADDRESS,
         ]);
@@ -123,7 +123,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
         await verifyContract(eContractid.StableDebtToken, await getStableDebtToken(stableDebt), [
           lendingPoolProxy.address,
           tokenAddress,
-          `OmniDex stable debt bearing ${token}`,
+          `Meridian stable debt bearing ${token}`,
           `stableDebt${token}`,
           ZERO_ADDRESS,
         ]);
@@ -138,7 +138,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
           [
             lendingPoolProxy.address,
             tokenAddress,
-            `OmniDex variable debt bearing ${token}`,
+            `Meridian variable debt bearing ${token}`,
             `variableDebt${token}`,
             ZERO_ADDRESS,
           ]

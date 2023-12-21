@@ -13,7 +13,7 @@ import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
 import { initReservesByHelper, configureReservesByHelper } from '../../helpers/init-helpers';
 import { exit } from 'process';
 import {
-  getOmniDexProtocolDataProvider,
+  getMeridianProtocolDataProvider,
   getLendingPoolAddressesProvider,
 } from '../../helpers/contracts-getters';
 import { chainlinkAggregatorProxy, chainlinkEthUsdAggregatorProxy } from '../../helpers/constants';
@@ -42,7 +42,7 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
       const incentivesController = await getParamPerNetwork(IncentivesController, network);
       const addressesProvider = await getLendingPoolAddressesProvider();
 
-      const testHelpers = await getOmniDexProtocolDataProvider();
+      const testHelpers = await getMeridianProtocolDataProvider();
 
       const admin = await addressesProvider.getPoolAdmin();
       const oracle = await addressesProvider.getPriceOracle();
@@ -87,14 +87,14 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
       );
 
       console.log(
-        '\tSetting OmniDexProtocolDataProvider at AddressesProvider at id: 0x01',
+        '\tSetting MeridianProtocolDataProvider at AddressesProvider at id: 0x01',
         collateralManagerAddress
       );
-      const omniDexProtocolDataProvider = await getOmniDexProtocolDataProvider();
+      const meridianProtocolDataProvider = await getMeridianProtocolDataProvider();
       await waitForTx(
         await addressesProvider.setAddress(
           '0x0100000000000000000000000000000000000000000000000000000000000000',
-          omniDexProtocolDataProvider.address
+          meridianProtocolDataProvider.address
         )
       );
 

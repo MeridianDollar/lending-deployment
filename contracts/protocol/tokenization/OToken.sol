@@ -7,16 +7,14 @@ import {ILendingPool} from '../../interfaces/ILendingPool.sol';
 import {IOToken} from '../../interfaces/IOToken.sol';
 import {WadRayMath} from '../libraries/math/WadRayMath.sol';
 import {Errors} from '../libraries/helpers/Errors.sol';
-import {
-  VersionedInitializable
-} from '../libraries/omnidex-upgradeability/VersionedInitializable.sol';
+import {VersionedInitializable} from '../libraries/meridian-upgradeability/VersionedInitializable.sol';
 import {IncentivizedERC20} from './IncentivizedERC20.sol';
-import {IOmniDexIncentivesController} from '../../interfaces/IOmniDexIncentivesController.sol';
+import {IMeridianIncentivesController} from '../../interfaces/IMeridianIncentivesController.sol';
 
 /**
- * @title OmniDex ERC20 OToken
- * @dev Implementation of the interest bearing token for the OmniDex protocol
- * @author OmniDex
+ * @title Meridian ERC20 OToken
+ * @dev Implementation of the interest bearing token for the Meridian protocol
+ * @author Meridian
  */
 contract OToken is
   VersionedInitializable,
@@ -46,34 +44,34 @@ contract OToken is
   address internal _team2;
   address internal _team3;
   address internal _underlyingAsset;
-  IOmniDexIncentivesController internal _incentivesController;
+  IMeridianIncentivesController internal _incentivesController;
 
-  modifier onlyLendingPool {
+  modifier onlyLendingPool() {
     require(_msgSender() == address(_pool), Errors.CT_CALLER_MUST_BE_LENDING_POOL);
     _;
   }
 
-  modifier onlyCurrentTreasury {
+  modifier onlyCurrentTreasury() {
     require(_msgSender() == _treasury, 'Only Current Treasury');
     _;
   }
 
-  modifier onlyCurrentKarmaFeeHolder {
+  modifier onlyCurrentKarmaFeeHolder() {
     require(_msgSender() == _karmaFeeHolder, 'Only Current Karma Fee Holder');
     _;
   }
 
-  modifier onlyCurrentTeam1 {
+  modifier onlyCurrentTeam1() {
     require(_msgSender() == _team1, 'Only Current Team 1');
     _;
   }
 
-  modifier onlyCurrentTeam2 {
+  modifier onlyCurrentTeam2() {
     require(_msgSender() == _team2, 'Only Current Team 2');
     _;
   }
 
-  modifier onlyCurrentTeam3 {
+  modifier onlyCurrentTeam3() {
     require(_msgSender() == _team3, 'Only Current Team 3');
     _;
   }
@@ -113,7 +111,7 @@ contract OToken is
   /**
    * @dev Initializes the oToken
    * @param pool The address of the lending pool where this oToken will be used
-   * @param treasury The address of the OmniDex treasury, receiving the fees on this oToken
+   * @param treasury The address of the Meridian treasury, receiving the fees on this oToken
    * @param underlyingAsset The address of the underlying asset of this oToken (E.g. WETH for aWETH)
    * @param incentivesController The smart contract managing potential incentives distribution
    * @param oTokenDecimals The decimals of the oToken, same as the underlying asset's
@@ -124,7 +122,7 @@ contract OToken is
     ILendingPool pool,
     address treasury,
     address underlyingAsset,
-    IOmniDexIncentivesController incentivesController,
+    IMeridianIncentivesController incentivesController,
     uint8 oTokenDecimals,
     string calldata oTokenName,
     string calldata oTokenSymbol,
@@ -285,12 +283,9 @@ contract OToken is
    * @param user The user whose balance is calculated
    * @return The balance of the user
    **/
-  function balanceOf(address user)
-    public
-    view
-    override(IncentivizedERC20, IERC20)
-    returns (uint256)
-  {
+  function balanceOf(
+    address user
+  ) public view override(IncentivizedERC20, IERC20) returns (uint256) {
     return super.balanceOf(user).rayMul(_pool.getReserveNormalizedIncome(_underlyingAsset));
   }
 
@@ -310,12 +305,9 @@ contract OToken is
    * @return The scaled balance of the user
    * @return The scaled balance and the scaled total supply
    **/
-  function getScaledUserBalanceAndSupply(address user)
-    external
-    view
-    override
-    returns (uint256, uint256)
-  {
+  function getScaledUserBalanceAndSupply(
+    address user
+  ) external view override returns (uint256, uint256) {
     return (super.balanceOf(user), super.totalSupply());
   }
 
@@ -344,7 +336,7 @@ contract OToken is
   }
 
   /**
-   * @dev Returns the address of the OmniDex treasury, receiving the fees on this oToken
+   * @dev Returns the address of the Meridian treasury, receiving the fees on this oToken
    **/
   function RESERVE_TREASURY_ADDRESS() public view returns (address) {
     return _treasury;
@@ -371,7 +363,7 @@ contract OToken is
     internal
     view
     override
-    returns (IOmniDexIncentivesController)
+    returns (IMeridianIncentivesController)
   {
     return _incentivesController;
   }
@@ -379,15 +371,18 @@ contract OToken is
   /**
    * @dev Returns the address of the incentives controller contract
    **/
-  function getIncentivesController() external view override returns (IOmniDexIncentivesController) {
+  function getIncentivesController()
+    external
+    view
+    override
+    returns (IMeridianIncentivesController)
+  {
     return _getIncentivesController();
   }
 
-  function setIncentivesController(IOmniDexIncentivesController incentivesController)
-    external
-    override
-    onlyCurrentTreasury
-  {
+  function setIncentivesController(
+    IMeridianIncentivesController incentivesController
+  ) external override onlyCurrentTreasury {
     _incentivesController = incentivesController;
   }
 
@@ -398,12 +393,10 @@ contract OToken is
    * @param amount The amount getting transferred
    * @return The amount transferred
    **/
-  function transferUnderlyingTo(address target, uint256 amount)
-    external
-    override
-    onlyLendingPool
-    returns (uint256)
-  {
+  function transferUnderlyingTo(
+    address target,
+    uint256 amount
+  ) external override onlyLendingPool returns (uint256) {
     IERC20(_underlyingAsset).safeTransfer(target, amount);
     return amount;
   }
@@ -439,14 +432,13 @@ contract OToken is
     //solium-disable-next-line
     require(block.timestamp <= deadline, 'INVALID_EXPIRATION');
     uint256 currentValidNonce = _nonces[owner];
-    bytes32 digest =
-      keccak256(
-        abi.encodePacked(
-          '\x19\x01',
-          DOMAIN_SEPARATOR,
-          keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, value, currentValidNonce, deadline))
-        )
-      );
+    bytes32 digest = keccak256(
+      abi.encodePacked(
+        '\x19\x01',
+        DOMAIN_SEPARATOR,
+        keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, value, currentValidNonce, deadline))
+      )
+    );
     require(owner == ecrecover(digest, v, r, s), 'INVALID_SIGNATURE');
     _nonces[owner] = currentValidNonce.add(1);
     _approve(owner, spender, value);
@@ -460,12 +452,7 @@ contract OToken is
    * @param amount The amount getting transferred
    * @param validate `true` if the transfer needs to be validated
    **/
-  function _transfer(
-    address from,
-    address to,
-    uint256 amount,
-    bool validate
-  ) internal {
+  function _transfer(address from, address to, uint256 amount, bool validate) internal {
     address underlyingAsset = _underlyingAsset;
     ILendingPool pool = _pool;
 
@@ -489,11 +476,7 @@ contract OToken is
    * @param to The destination address
    * @param amount The amount getting transferred
    **/
-  function _transfer(
-    address from,
-    address to,
-    uint256 amount
-  ) internal override {
+  function _transfer(address from, address to, uint256 amount) internal override {
     _transfer(from, to, amount, true);
   }
 }

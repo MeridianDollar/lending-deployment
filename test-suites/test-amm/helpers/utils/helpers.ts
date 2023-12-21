@@ -11,10 +11,10 @@ import {
 import { tEthereumAddress } from '../../../../helpers/types';
 import BigNumber from 'bignumber.js';
 import { getDb, DRE } from '../../../../helpers/misc-utils';
-import { OmniDexProtocolDataProvider } from '../../../../types/OmniDexProtocolDataProvider';
+import { MeridianProtocolDataProvider } from '../../../../types/MeridianProtocolDataProvider';
 
 export const getReserveData = async (
-  helper: OmniDexProtocolDataProvider,
+  helper: MeridianProtocolDataProvider,
   reserve: tEthereumAddress
 ): Promise<ReserveData> => {
   const [reserveData, tokenAddresses, rateOracle, token] = await Promise.all([
@@ -44,8 +44,8 @@ export const getReserveData = async (
     totalLiquidity.eq(0)
       ? 0
       : new BigNumber(reserveData.totalStableDebt.toString())
-          .plus(reserveData.totalVariableDebt.toString())
-          .rayDiv(totalLiquidity)
+        .plus(reserveData.totalVariableDebt.toString())
+        .rayDiv(totalLiquidity)
   );
 
   return {
@@ -74,7 +74,7 @@ export const getReserveData = async (
 
 export const getUserData = async (
   pool: LendingPool,
-  helper: OmniDexProtocolDataProvider,
+  helper: MeridianProtocolDataProvider,
   reserve: string,
   user: tEthereumAddress,
   sender?: tEthereumAddress
@@ -117,7 +117,7 @@ export const getReserveAddressFromSymbol = async (symbol: string) => {
 const getOTokenUserData = async (
   reserve: string,
   user: string,
-  helpersContract: OmniDexProtocolDataProvider
+  helpersContract: MeridianProtocolDataProvider
 ) => {
   const oTokenAddress: string = (await helpersContract.getReserveTokensAddresses(reserve))
     .oTokenAddress;

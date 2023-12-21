@@ -3,10 +3,10 @@ import { checkVerification } from '../../helpers/etherscan-verification';
 import { ConfigNames } from '../../helpers/configuration';
 import { printContracts } from '../../helpers/misc-utils';
 
-task('omnidex:dev', 'Deploy development enviroment')
+task('meridian:dev', 'Deploy development enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
   .setAction(async ({ verify }, localBRE) => {
-    const POOL_NAME = ConfigNames.OmniDex;
+    const POOL_NAME = ConfigNames.Meridian;
 
     await localBRE.run('set-DRE');
 

@@ -3,8 +3,8 @@ pragma solidity 0.6.12;
 
 /**
  * @title Errors library
- * @author OmniDex
- * @notice Defines the error messages emitted by the different contracts of the OmniDex protocol
+ * @author Meridian
+ * @notice Defines the error messages emitted by the different contracts of the Meridian protocol
  * @dev Error messages prefix glossary:
  *  - VL = ValidationLogic
  *  - MATH = Math libraries

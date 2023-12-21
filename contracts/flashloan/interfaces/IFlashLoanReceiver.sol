@@ -6,8 +6,8 @@ import {ILendingPool} from '../../interfaces/ILendingPool.sol';
 
 /**
  * @title IFlashLoanReceiver interface
- * @notice Interface for the OmniDex fee IFlashLoanReceiver.
- * @author OmniDex
+ * @notice Interface for the Meridian fee IFlashLoanReceiver.
+ * @author Meridian
  * @dev implement this interface to develop a flashloan-compatible flashLoanReceiver contract
  **/
 interface IFlashLoanReceiver {

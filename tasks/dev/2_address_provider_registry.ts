@@ -5,7 +5,7 @@ import {
 } from '../../helpers/contracts-deployments';
 import { getEthersSigners } from '../../helpers/contracts-helpers';
 import { waitForTx } from '../../helpers/misc-utils';
-import { OmniDexConfig } from '../../markets/omnidex';
+// import { MeridianConfig } from '../../markets/meridian';
 
 task(
   'dev:deploy-address-provider',
@@ -18,7 +18,7 @@ task(
     const admin = await (await getEthersSigners())[0].getAddress();
 
     const addressesProvider = await deployLendingPoolAddressesProvider(
-      OmniDexConfig.MarketId,
+      MeridianConfig.MarketId,
       verify
     );
     await waitForTx(await addressesProvider.setPoolAdmin(admin));

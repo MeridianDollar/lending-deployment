@@ -15,9 +15,9 @@ import { ICommonConfiguration, eEthereumNetwork } from '../../helpers/types';
 
 export const CommonsConfig: ICommonConfiguration = {
   MarketId: 'Commons',
-  OTokenNamePrefix: 'OmniDex AMM Market',
-  StableDebtTokenNamePrefix: 'OmniDex AMM Market stable debt',
-  VariableDebtTokenNamePrefix: 'OmniDex AMM Market variable debt',
+  OTokenNamePrefix: 'Meridian AMM Market',
+  StableDebtTokenNamePrefix: 'Meridian AMM Market stable debt',
+  VariableDebtTokenNamePrefix: 'Meridian AMM Market variable debt',
   SymbolPrefix: 'Amm',
   ProviderId: 0, // Overriden in index.ts
   OracleQuoteCurrency: 'ETH',
@@ -28,7 +28,7 @@ export const CommonsConfig: ICommonConfiguration = {
     UsdAddress: '0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96',
     NilAddress: '0x0000000000000000000000000000000000000000',
     OneAddress: '0x0000000000000000000000000000000000000001',
-    OmniDexReferral: '0',
+    MeridianReferral: '0',
   },
 
   // ----------------
@@ -63,7 +63,7 @@ export const CommonsConfig: ICommonConfiguration = {
     UniWBTCWETH: {
       borrowRate: oneRay.multipliedBy(0.05).toFixed(),
     },
-    UniKARMAWETH: {
+    UniSTLOSWETH: {
       borrowRate: oneRay.multipliedBy(0.05).toFixed(),
     },
     UniBATWETH: {
@@ -204,7 +204,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.main]: '0xe3d9988f676457123c5fd01297605efdd0cba1ae',
     [eEthereumNetwork.tenderly]: '0xe3d9988f676457123c5fd01297605efdd0cba1ae',
   },
-  OmniDexOracle: {
+  MeridianOracle: {
     [eEthereumNetwork.coverage]: '',
     [eEthereumNetwork.hardhat]: '',
     [eEthereumNetwork.buidlerevm]: '',
@@ -233,7 +233,7 @@ export const CommonsConfig: ICommonConfiguration = {
       DAI: '0x22B58f1EbEDfCA50feF632bD73368b2FdA96D541',
       UniDAIWETH: '0x5699302154A020FB1DE2B1d39f4c73785A235d8F', // Mock oracles
       UniWBTCWETH: '0x5699302154A020FB1DE2B1d39f4c73785A235d8F',
-      UniKARMAWETH: '0x5699302154A020FB1DE2B1d39f4c73785A235d8F',
+      UniSTLOSWETH: '0x5699302154A020FB1DE2B1d39f4c73785A235d8F',
       UniBATWETH: '0x5699302154A020FB1DE2B1d39f4c73785A235d8F',
       UniDAIUSDC: '0x5699302154A020FB1DE2B1d39f4c73785A235d8F',
       UniCRVWETH: '0x5699302154A020FB1DE2B1d39f4c73785A235d8F',
@@ -257,7 +257,7 @@ export const CommonsConfig: ICommonConfiguration = {
       DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
       UniDAIWETH: '0x66a6b87a18db78086acda75b7720dc47cdabcc05',
       UniWBTCWETH: '0x7004BB6F2013F13C54899309cCa029B49707E547',
-      UniKARMAWETH: '0xB525547968610395B60085bDc8033FFeaEaa5F64',
+      UniSTLOSWETH: '0xB525547968610395B60085bDc8033FFeaEaa5F64',
       UniBATWETH: '0xB394D8a1CE721630Cbea8Ec110DCEf0D283EDE3a',
       UniDAIUSDC: '0x3B148Fa5E8297DB64262442052b227328730EA81',
       UniCRVWETH: '0x10F7078e2f29802D2AC78045F61A69aE0883535A',
@@ -280,7 +280,7 @@ export const CommonsConfig: ICommonConfiguration = {
       DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
       UniDAIWETH: '0x66a6b87a18db78086acda75b7720dc47cdabcc05',
       UniWBTCWETH: '0x7004BB6F2013F13C54899309cCa029B49707E547',
-      UniKARMAWETH: '0xB525547968610395B60085bDc8033FFeaEaa5F64',
+      UniSTLOSWETH: '0xB525547968610395B60085bDc8033FFeaEaa5F64',
       UniBATWETH: '0xB394D8a1CE721630Cbea8Ec110DCEf0D283EDE3a',
       UniDAIUSDC: '0x3B148Fa5E8297DB64262442052b227328730EA81',
       UniCRVWETH: '0x10F7078e2f29802D2AC78045F61A69aE0883535A',

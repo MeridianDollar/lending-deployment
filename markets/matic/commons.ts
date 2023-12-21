@@ -14,9 +14,9 @@ import { ICommonConfiguration, ePolygonNetwork } from '../../helpers/types';
 
 export const CommonsConfig: ICommonConfiguration = {
   MarketId: 'Commons',
-  OTokenNamePrefix: 'OmniDex Matic Market',
-  StableDebtTokenNamePrefix: 'OmniDex Matic Market stable debt',
-  VariableDebtTokenNamePrefix: 'OmniDex Matic Market variable debt',
+  OTokenNamePrefix: 'Meridian Matic Market',
+  StableDebtTokenNamePrefix: 'Meridian Matic Market stable debt',
+  VariableDebtTokenNamePrefix: 'Meridian Matic Market variable debt',
   SymbolPrefix: 'm',
   ProviderId: 0, // Overriden in index.ts
   OracleQuoteCurrency: 'ETH',
@@ -27,7 +27,7 @@ export const CommonsConfig: ICommonConfiguration = {
     UsdAddress: '0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96',
     NilAddress: '0x0000000000000000000000000000000000000000',
     OneAddress: '0x0000000000000000000000000000000000000001',
-    OmniDexReferral: '0',
+    MeridianReferral: '0',
   },
 
   // ----------------
@@ -59,7 +59,7 @@ export const CommonsConfig: ICommonConfiguration = {
     WMATIC: {
       borrowRate: oneRay.multipliedBy(0.05).toFixed(),
     },
-    KARMA: {
+    STLOS: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
   },
@@ -110,7 +110,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [ePolygonNetwork.mumbai]: '',
     [ePolygonNetwork.matic]: '',
   },
-  OmniDexOracle: {
+  MeridianOracle: {
     [ePolygonNetwork.mumbai]: '',
     [ePolygonNetwork.matic]: '',
   },
@@ -120,7 +120,7 @@ export const CommonsConfig: ICommonConfiguration = {
   },
   ChainlinkAggregator: {
     [ePolygonNetwork.matic]: {
-      KARMA: '0xbE23a3AA13038CfC28aFd0ECe4FdE379fE7fBfc4',
+      STLOS: '0xbE23a3AA13038CfC28aFd0ECe4FdE379fE7fBfc4',
       DAI: '0xFC539A559e170f848323e19dfD66007520510085',
       USDC: '0xefb7e6be8356cCc6827799B6A7348eE674A80EaE',
       USDT: '0xf9d5AAC6E5572AEFa6bd64108ff86a222F69B64d',

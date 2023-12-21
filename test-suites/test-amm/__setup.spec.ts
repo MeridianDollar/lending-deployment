@@ -16,7 +16,7 @@ import {
   deployLendingPoolCollateralManager,
   deployMockFlashLoanReceiver,
   deployWalletBalancerProvider,
-  deployOmniDexProtocolDataProvider,
+  deployMeridianProtocolDataProvider,
   deployLendingRateOracle,
   deployStableAndVariableTokensHelper,
   deployOTokensAndRatesHelper,
@@ -28,10 +28,10 @@ import {
   deployFlashLiquidationAdapter,
   authorizeWETHGateway,
   deployOTokenImplementations,
-  deployOmniDexOracle,
+  deployMeridianOracle,
 } from '../../helpers/contracts-deployments';
 import { Signer } from 'ethers';
-import { TokenContractId, eContractid, tEthereumAddress, OmniDexPools } from '../../helpers/types';
+import { TokenContractId, eContractid, tEthereumAddress, MeridianPools } from '../../helpers/types';
 import { MintableERC20 } from '../../types/MintableERC20';
 import {
   ConfigNames,
@@ -66,7 +66,7 @@ const LENDING_RATE_ORACLE_RATES_COMMON = AmmConfig.LendingRateOracleRatesCommon;
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
 
-  const ammConfigData = getReservesConfigByPool(OmniDexPools.amm);
+  const ammConfigData = getReservesConfigByPool(MeridianPools.amm);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     if (tokenSymbol === 'WETH') {
@@ -95,7 +95,7 @@ const deployAllMockTokens = async (deployer: Signer) => {
 
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
-  const omniDexAdmin = await deployer.getAddress();
+  const meridianAdmin = await deployer.getAddress();
   const config = loadPoolConfig(ConfigNames.Amm);
   const {
     OTokenNamePrefix,
@@ -108,7 +108,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const mockTokens = await deployAllMockTokens(deployer);
 
   const addressesProvider = await deployLendingPoolAddressesProvider(AmmConfig.MarketId);
-  await waitForTx(await addressesProvider.setPoolAdmin(omniDexAdmin));
+  await waitForTx(await addressesProvider.setPoolAdmin(meridianAdmin));
 
   //setting users[1] as emergency admin, which is in position 2 in the DRE addresses list
   const addressList = await getEthersSignersAddresses();
@@ -160,7 +160,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       USDC: mockTokens.USDC.address,
       USDT: mockTokens.USDT.address,
       SUSD: mockTokens.SUSD.address,
-      KARMA: mockTokens.KARMA.address,
+      STLOS: mockTokens.STLOS.address,
       BAT: mockTokens.BAT.address,
       MKR: mockTokens.MKR.address,
       LINK: mockTokens.LINK.address,
@@ -181,7 +181,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       // WETH: mockTokens.LpWETH.address,
       UniDAIWETH: mockTokens.UniDAIWETH.address,
       UniWBTCWETH: mockTokens.UniWBTCWETH.address,
-      UniKARMAWETH: mockTokens.UniKARMAWETH.address,
+      UniSTLOSWETH: mockTokens.UniSTLOSWETH.address,
       UniBATWETH: mockTokens.UniBATWETH.address,
       UniDAIUSDC: mockTokens.UniDAIUSDC.address,
       UniCRVWETH: mockTokens.UniCRVWETH.address,
@@ -228,7 +228,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     config.OracleQuoteCurrency
   );
 
-  await deployOmniDexOracle([
+  await deployMeridianOracle([
     tokens,
     aggregators,
     fallbackOracle.address,
@@ -248,13 +248,13 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     LENDING_RATE_ORACLE_RATES_COMMON,
     allReservesAddresses,
     lendingRateOracle,
-    omniDexAdmin
+    meridianAdmin
   );
   await deployOTokenImplementations(ConfigNames.Amm, ReservesConfig);
 
-  const testHelpers = await deployOmniDexProtocolDataProvider(addressesProvider.address);
+  const testHelpers = await deployMeridianProtocolDataProvider(addressesProvider.address);
 
-  await insertContractAddressInDb(eContractid.OmniDexProtocolDataProvider, testHelpers.address);
+  await insertContractAddressInDb(eContractid.MeridianProtocolDataProvider, testHelpers.address);
   const admin = await deployer.getAddress();
 
   console.log('Initialize configuration');

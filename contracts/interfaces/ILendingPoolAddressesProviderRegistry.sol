@@ -3,11 +3,11 @@ pragma solidity 0.6.12;
 
 /**
  * @title LendingPoolAddressesProviderRegistry contract
- * @dev Main registry of LendingPoolAddressesProvider of multiple OmniDex protocol's markets
- * - Used for indexing purposes of OmniDex protocol's markets
+ * @dev Main registry of LendingPoolAddressesProvider of multiple Meridian protocol's markets
+ * - Used for indexing purposes of Meridian protocol's markets
  * - The id assigned to a LendingPoolAddressesProvider refers to the market it is connected with,
- *   for example with `0` for the OmniDex main market and `1` for the next created
- * @author OmniDex
+ *   for example with `0` for the Meridian main market and `1` for the next created
+ * @author Meridian
  **/
 interface ILendingPoolAddressesProviderRegistry {
   event AddressesProviderRegistered(address indexed newAddress);
@@ -15,10 +15,9 @@ interface ILendingPoolAddressesProviderRegistry {
 
   function getAddressesProvidersList() external view returns (address[] memory);
 
-  function getAddressesProviderIdByAddress(address addressesProvider)
-    external
-    view
-    returns (uint256);
+  function getAddressesProviderIdByAddress(
+    address addressesProvider
+  ) external view returns (uint256);
 
   function registerAddressesProvider(address provider, uint256 id) external;
 

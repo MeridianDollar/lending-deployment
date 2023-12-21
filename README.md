@@ -1,5 +1,5 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Build pass](https://github.com/OmniDexFinance/omnidex-v1-lending-core/actions/workflows/node.js.yml/badge.svg)](https://github.com/omnidexfinance/omnidex-v1-lending-core/actions/workflows/node.js.yml)
+[![Build pass](https://github.com/MeridianFinance/meridian-v1-lending-core/actions/workflows/node.js.yml/badge.svg)](https://github.com/meridianfinance/meridian-v1-lending-core/actions/workflows/node.js.yml)
 ```
    ____    __  __   _   _   _____   _____    ______  __   __
   / __ \  |  \/  | | \ | | |_   _| |  __ \  |  ____| \ \ / /
@@ -9,38 +9,38 @@
   \____/  |_|  |_| |_| \_| |_____| |_____/  |______| /_/ \_\
 ```
 
-# OmniDex Lending Protocol V1
+# Meridian Lending Protocol V1
 
-This repository contains the smart contracts source code and markets configuration for OmniDex Lending Protocol V1. The repository uses Docker Compose and Hardhat as development enviroment for compilation, testing and deployment tasks.
+This repository contains the smart contracts source code and markets configuration for Meridian Lending Protocol V1. The repository uses Docker Compose and Hardhat as development enviroment for compilation, testing and deployment tasks.
 
-## What is OmniDex Lending?
+## What is Meridian Lending?
 
-OmniDex Lending is a decentralized non-custodial liquidity markets protocol where users can participate as depositors or borrowers. Depositors provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralized (perpetually) or undercollateralized (one-block liquidity) fashion.
+Meridian Lending is a decentralized non-custodial liquidity markets protocol where users can participate as depositors or borrowers. Depositors provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralized (perpetually) or undercollateralized (one-block liquidity) fashion.
 
 ## Documentation
 
-The documentation of OmniDex Lending V1 is in the following [OmniDex Lending V1 documentation](https://docs.omnidex.finance/developers/v/1.0/) link. At the documentation you can learn more about the protocol, see the contract interfaces, integration guides and audits.
+The documentation of Meridian Lending V1 is in the following [Meridian Lending V1 documentation](https://docs.meridian.finance/developers/v/1.0/) link. At the documentation you can learn more about the protocol, see the contract interfaces, integration guides and audits.
 
-For getting the latest contracts addresses, please check the [Deployed contracts](https://docs.omnidex.finance/developers/v/1.0/deployed-contracts/deployed-contracts) page at the documentation to stay up to date.
+For getting the latest contracts addresses, please check the [Deployed contracts](https://docs.meridian.finance/developers/v/1.0/deployed-contracts/deployed-contracts) page at the documentation to stay up to date.
 
-OmniDex Lending is a fork of Aave Protocol V2 and as such a more detailed and technical description of the protocol can be found in this repository, [here](./aave-v2-whitepaper.pdf)
+Meridian Lending is a fork of Aave Protocol V2 and as such a more detailed and technical description of the protocol can be found in this repository, [here](./aave-v2-whitepaper.pdf)
 
 
 
 ## Connect with the community
 
-You can join at the [Discord](https://discord.com/invite/P7ezrGbD) channel or at the [Governance Forum](https://governance.omnidex.finance/) for asking questions about the protocol or talk about OmniDex Lending with other peers.
+You can join at the [Discord](https://discord.com/invite/P7ezrGbD) channel or at the [Governance Forum](https://governance.meridian.finance/) for asking questions about the protocol or talk about Meridian Lending with other peers.
 
 ## Getting Started
 
-You can install `@omnidexfinance/omnidex-v1-lending-core` as an NPM package in your Hardhat, Buidler or Truffle project to import the contracts and interfaces:
+You can install `@meridianfinance/meridian-v1-lending-core` as an NPM package in your Hardhat, Buidler or Truffle project to import the contracts and interfaces:
 
-`npm install @omnidexfinance/omnidex-v1-lending-core`
+`npm install @meridianfinance/meridian-v1-lending-core`
 
 Import at Solidity files:
 
 ```
-import {ILendingPool} from "@omnidexfinance/omnidex-v1-lending-core/contracts/interfaces/ILendingPool.sol";
+import {ILendingPool} from "@meridianfinance/meridian-v1-lending-core/contracts/interfaces/ILendingPool.sol";
 
 contract Misc {
 
@@ -56,7 +56,7 @@ The JSON artifacts with the ABI and Bytecode are also included into the bundled 
 Import JSON file via Node JS `require`:
 
 ```
-const LendingPoolV2Artifact = require('@omnidexfinance/omnidex-v1-lending-core/artifacts/contracts/protocol/lendingpool/LendingPool.sol/LendingPool.json');
+const LendingPoolV2Artifact = require('@meridianfinance/meridian-v1-lending-core/artifacts/contracts/protocol/lendingpool/LendingPool.sol/LendingPool.json');
 
 // Log the ABI into console
 console.log(LendingPoolV2Artifact.abi)
@@ -91,9 +91,9 @@ TENDERLY_USERNAME=""
 
 ## Markets configuration
 
-The configurations related with the OmniDex Markets are located at `markets` directory. You can follow the `IOmniDexConfiguration` interface to create new Markets configuration or extend the current OmniDex Lending configuration.
+The configurations related with the Meridian Markets are located at `markets` directory. You can follow the `IMeridianConfiguration` interface to create new Markets configuration or extend the current Meridian Lending configuration.
 
-Each market should have his own Market configuration file, and their own set of deployment tasks, using the OmniDex market config and tasks as a reference.
+Each market should have his own Market configuration file, and their own set of deployment tasks, using the Meridian market config and tasks as a reference.
 
 ## Test
 
@@ -112,20 +112,20 @@ npm run test
 
 ## Deployments
 
-For deploying OmniDex Lending Protocol V1, you can use the available scripts located at `package.json`. For a complete list, run `npm run` to see all the tasks.
+For deploying Meridian Lending Protocol V1, you can use the available scripts located at `package.json`. For a complete list, run `npm run` to see all the tasks.
 
 
 ### Mainnet fork deployment
 
-You can deploy OmniDex Lending Protocol V1 in a forked Mainnet chain using Hardhat built-in fork feature:
+You can deploy Meridian Lending Protocol V1 in a forked Mainnet chain using Hardhat built-in fork feature:
 
 ```
-docker-compose run contracts-env npm run omnidex:fork:main
+docker-compose run contracts-env npm run meridian:fork:main
 ```
 
-### Deploy OmniDex Lending into a Mainnet Fork via console
+### Deploy Meridian Lending into a Mainnet Fork via console
 
-You can deploy OmniDex Lending into the Hardhat console in fork mode, to interact with the protocol inside the fork or for testing purposes.
+You can deploy Meridian Lending into the Hardhat console in fork mode, to interact with the protocol inside the fork or for testing purposes.
 
 Run the console in Mainnet fork mode:
 
@@ -133,11 +133,11 @@ Run the console in Mainnet fork mode:
 docker-compose run contracts-env npm run console:fork
 ```
 
-At the Hardhat console, interact with the OmniDex Lending protocol in Mainnet fork mode:
+At the Hardhat console, interact with the Meridian Lending protocol in Mainnet fork mode:
 
 ```
-// Deploy the OmniDex Lending protocol in fork mode
-await run('omnidex:mainnet')
+// Deploy the Meridian Lending protocol in fork mode
+await run('meridian:mainnet')
 
 // Or your custom Hardhat task
 await run('your-custom-task');
@@ -149,7 +149,7 @@ run('set-DRE');
 const contractGetters = require('./helpers/contracts-getters'); // Import a TS/JS file
 
 // Lending pool instance
-const lendingPool = await contractGetters.getLendingPool("LendingPool address from 'omnidex:mainnet' task");
+const lendingPool = await contractGetters.getLendingPool("LendingPool address from 'meridian:mainnet' task");
 
 // You can impersonate any Ethereum address
 await network.provider.request({ method: "hardhat_impersonateAccount",  params: ["0xb1adceddb2941033a090dd166a462fe1c2029484"]});
@@ -167,9 +167,9 @@ await lendingPool.connect(signer).deposit(DAI.address, ethers.utils.parseUnits('
 
 ```
 
-## Interact with OmniDex Lending in Mainnet via console
+## Interact with Meridian Lending in Mainnet via console
 
-You can interact with OmniDex Lending at Mainnet network using the Hardhat console, in the scenario where the frontend is down or you want to interact directly. You can check the deployed addresses at https://docs.omnidex.finance/developers/deployed-contracts.
+You can interact with Meridian Lending at Mainnet network using the Hardhat console, in the scenario where the frontend is down or you want to interact directly. You can check the deployed addresses at https://docs.meridian.finance/developers/deployed-contracts.
 
 Run the Hardhat console pointing to the Mainnet network:
 
@@ -183,7 +183,7 @@ At the Hardhat console, you can interact with the protocol:
 // Load the HRE into helpers to access signers
 run("set-DRE")
 
-// Import getters to instance any OmniDex Lending contract
+// Import getters to instance any Meridian Lending contract
 const contractGetters = require('./helpers/contracts-getters');
 
 // Load the first signer

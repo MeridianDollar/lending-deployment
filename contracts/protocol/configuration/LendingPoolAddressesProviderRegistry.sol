@@ -2,18 +2,16 @@
 pragma solidity 0.6.12;
 
 import {Ownable} from '../../dependencies/openzeppelin/contracts/Ownable.sol';
-import {
-  ILendingPoolAddressesProviderRegistry
-} from '../../interfaces/ILendingPoolAddressesProviderRegistry.sol';
+import {ILendingPoolAddressesProviderRegistry} from '../../interfaces/ILendingPoolAddressesProviderRegistry.sol';
 import {Errors} from '../libraries/helpers/Errors.sol';
 
 /**
  * @title LendingPoolAddressesProviderRegistry contract
- * @dev Main registry of LendingPoolAddressesProvider of multiple OmniDex protocol's markets
- * - Used for indexing purposes of OmniDex protocol's markets
+ * @dev Main registry of LendingPoolAddressesProvider of multiple Meridian protocol's markets
+ * - Used for indexing purposes of Meridian protocol's markets
  * - The id assigned to a LendingPoolAddressesProvider refers to the market it is connected with,
- *   for example with `0` for the OmniDex main market and `1` for the next created
- * @author OmniDex
+ *   for example with `0` for the Meridian main market and `1` for the next created
+ * @author Meridian
  **/
 contract LendingPoolAddressesProviderRegistry is Ownable, ILendingPoolAddressesProviderRegistry {
   mapping(address => uint256) private _addressesProviders;
@@ -66,12 +64,9 @@ contract LendingPoolAddressesProviderRegistry is Ownable, ILendingPoolAddressesP
    * @dev Returns the id on a registered LendingPoolAddressesProvider
    * @return The id or 0 if the LendingPoolAddressesProvider is not registered
    */
-  function getAddressesProviderIdByAddress(address addressesProvider)
-    external
-    view
-    override
-    returns (uint256)
-  {
+  function getAddressesProviderIdByAddress(
+    address addressesProvider
+  ) external view override returns (uint256) {
     return _addressesProviders[addressesProvider];
   }
 

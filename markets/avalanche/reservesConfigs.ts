@@ -38,7 +38,7 @@ export const strategyWBTC: IReserveParams = {
   reserveFactor: '1000',
 };
 
-export const strategyKARMA: IReserveParams = {
+export const strategySTLOS: IReserveParams = {
   strategy: rateStrategyVolatileOne,
   baseLTVAsCollateral: '4000',
   liquidationThreshold: '6500',

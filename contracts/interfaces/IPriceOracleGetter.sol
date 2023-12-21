@@ -3,7 +3,7 @@ pragma solidity 0.6.12;
 
 /**
  * @title IPriceOracleGetter interface
- * @notice Interface for the OmniDex price oracle.
+ * @notice Interface for the Meridian price oracle.
  **/
 
 interface IPriceOracleGetter {

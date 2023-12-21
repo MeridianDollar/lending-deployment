@@ -7,7 +7,7 @@ import {
 } from '../../helpers/configuration';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
-  getOmniDexProtocolDataProvider,
+  getMeridianProtocolDataProvider,
   getAddressById,
   getLendingPool,
   getLendingPoolAddressesProvider,
@@ -82,7 +82,7 @@ task('verify:general', 'Verify contracts at Etherscan')
         ? await getLendingPoolCollateralManagerImpl(lendingPoolCollateralManagerImplAddress)
         : await getLendingPoolCollateralManagerImpl();
 
-      const dataProvider = await getOmniDexProtocolDataProvider();
+      const dataProvider = await getMeridianProtocolDataProvider();
       const walletProvider = await getWalletProvider();
 
       const wethGatewayAddress = getParamPerNetwork(WethGateway, network);
@@ -119,8 +119,8 @@ task('verify:general', 'Verify contracts at Etherscan')
       );
 
       // Test helpers
-      console.log('\n- Verifying  OmniDex  Provider Helpers...\n');
-      await verifyContract(eContractid.OmniDexProtocolDataProvider, dataProvider, [
+      console.log('\n- Verifying  Meridian  Provider Helpers...\n');
+      await verifyContract(eContractid.MeridianProtocolDataProvider, dataProvider, [
         addressesProvider.address,
       ]);
 

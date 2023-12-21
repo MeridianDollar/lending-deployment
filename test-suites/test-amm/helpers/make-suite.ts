@@ -3,7 +3,7 @@ import { Signer } from 'ethers';
 import {
   getLendingPool,
   getLendingPoolAddressesProvider,
-  getOmniDexProtocolDataProvider,
+  getMeridianProtocolDataProvider,
   getOToken,
   getMintableERC20,
   getLendingPoolConfiguratorProxy,
@@ -17,7 +17,7 @@ import {
 } from '../../../helpers/contracts-getters';
 import { eEthereumNetwork, eNetwork, tEthereumAddress } from '../../../helpers/types';
 import { LendingPool } from '../../../types/LendingPool';
-import { OmniDexProtocolDataProvider } from '../../../types/OmniDexProtocolDataProvider';
+import { MeridianProtocolDataProvider } from '../../../types/MeridianProtocolDataProvider';
 import { MintableERC20 } from '../../../types/MintableERC20';
 import { OToken } from '../../../types/OToken';
 import { LendingPoolConfigurator } from '../../../types/LendingPoolConfigurator';
@@ -55,13 +55,13 @@ export interface TestEnv {
   pool: LendingPool;
   configurator: LendingPoolConfigurator;
   oracle: PriceOracle;
-  helpersContract: OmniDexProtocolDataProvider;
+  helpersContract: MeridianProtocolDataProvider;
   weth: WETH9Mocked;
   aWETH: OToken;
   dai: MintableERC20;
   aDai: OToken;
   usdc: MintableERC20;
-  karma: MintableERC20;
+  stlos: MintableERC20;
   addressesProvider: LendingPoolAddressesProvider;
   uniswapLiquiditySwapAdapter: UniswapLiquiditySwapAdapter;
   uniswapRepayAdapter: UniswapRepayAdapter;
@@ -80,14 +80,14 @@ const testEnv: TestEnv = {
   users: [] as SignerWithAddress[],
   pool: {} as LendingPool,
   configurator: {} as LendingPoolConfigurator,
-  helpersContract: {} as OmniDexProtocolDataProvider,
+  helpersContract: {} as MeridianProtocolDataProvider,
   oracle: {} as PriceOracle,
   weth: {} as WETH9Mocked,
   aWETH: {} as OToken,
   dai: {} as MintableERC20,
   aDai: {} as OToken,
   usdc: {} as MintableERC20,
-  karma: {} as MintableERC20,
+  stlos: {} as MintableERC20,
   addressesProvider: {} as LendingPoolAddressesProvider,
   uniswapLiquiditySwapAdapter: {} as UniswapLiquiditySwapAdapter,
   uniswapRepayAdapter: {} as UniswapRepayAdapter,
@@ -125,7 +125,7 @@ export async function initializeMakeSuite() {
     testEnv.oracle = await getPriceOracle();
   }
 
-  testEnv.helpersContract = await getOmniDexProtocolDataProvider();
+  testEnv.helpersContract = await getMeridianProtocolDataProvider();
 
   const allTokens = await testEnv.helpersContract.getAllOTokens();
   const aDaiAddress = allTokens.find((oToken) => oToken.symbol === 'aAmmDAI')?.tokenAddress;
@@ -136,7 +136,7 @@ export async function initializeMakeSuite() {
 
   const daiAddress = reservesTokens.find((token) => token.symbol === 'DAI')?.tokenAddress;
   const usdcAddress = reservesTokens.find((token) => token.symbol === 'USDC')?.tokenAddress;
-  const karmaAddress = reservesTokens.find((token) => token.symbol === 'UniKARMAWETH')?.tokenAddress;
+  const karmaAddress = reservesTokens.find((token) => token.symbol === 'UniSTLOSWETH')?.tokenAddress;
   const wethAddress = reservesTokens.find((token) => token.symbol === 'WETH')?.tokenAddress;
 
   if (!aDaiAddress || !aWEthAddress) {
@@ -151,7 +151,7 @@ export async function initializeMakeSuite() {
 
   testEnv.dai = await getMintableERC20(daiAddress);
   testEnv.usdc = await getMintableERC20(usdcAddress);
-  testEnv.karma = await getMintableERC20(karmaAddress);
+  testEnv.stlos = await getMintableERC20(karmaAddress);
   testEnv.weth = await getWETHMocked(wethAddress);
   testEnv.wethGateway = await getWETHGateway();
 

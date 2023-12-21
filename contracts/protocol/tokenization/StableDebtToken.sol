@@ -6,14 +6,14 @@ import {MathUtils} from '../libraries/math/MathUtils.sol';
 import {WadRayMath} from '../libraries/math/WadRayMath.sol';
 import {IStableDebtToken} from '../../interfaces/IStableDebtToken.sol';
 import {ILendingPool} from '../../interfaces/ILendingPool.sol';
-import {IOmniDexIncentivesController} from '../../interfaces/IOmniDexIncentivesController.sol';
+import {IMeridianIncentivesController} from '../../interfaces/IMeridianIncentivesController.sol';
 import {Errors} from '../libraries/helpers/Errors.sol';
 
 /**
  * @title StableDebtToken
  * @notice Implements a stable debt token to track the borrowing positions of users
  * at stable rate mode
- * @author OmniDex
+ * @author Meridian
  **/
 contract StableDebtToken is IStableDebtToken, DebtTokenBase {
   using WadRayMath for uint256;
@@ -28,9 +28,9 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
   ILendingPool internal _pool;
   address internal _treasury;
   address internal _underlyingAsset;
-  IOmniDexIncentivesController internal _incentivesController;
+  IMeridianIncentivesController internal _incentivesController;
 
-  modifier onlyCurrentTreasury {
+  modifier onlyCurrentTreasury() {
     require(_msgSender() == _treasury, 'Only Current Treasury');
     _;
   }
@@ -55,7 +55,7 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
   function initialize(
     ILendingPool pool,
     address underlyingAsset,
-    IOmniDexIncentivesController incentivesController,
+    IMeridianIncentivesController incentivesController,
     uint8 debtTokenDecimals,
     string memory debtTokenName,
     string memory debtTokenSymbol,
@@ -124,8 +124,10 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
     if (accountBalance == 0) {
       return 0;
     }
-    uint256 cumulatedInterest =
-      MathUtils.calculateCompoundedInterest(stableRate, _timestamps[account]);
+    uint256 cumulatedInterest = MathUtils.calculateCompoundedInterest(
+      stableRate,
+      _timestamps[account]
+    );
     return accountBalance.rayMul(cumulatedInterest);
   }
 
@@ -276,15 +278,9 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
    * @param user The address of the user for which the interest is being accumulated
    * @return The previous principal balance, the new principal balance and the balance increase
    **/
-  function _calculateBalanceIncrease(address user)
-    internal
-    view
-    returns (
-      uint256,
-      uint256,
-      uint256
-    )
-  {
+  function _calculateBalanceIncrease(
+    address user
+  ) internal view returns (uint256, uint256, uint256) {
     uint256 previousPrincipalBalance = super.balanceOf(user);
 
     if (previousPrincipalBalance == 0) {
@@ -304,17 +300,7 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
   /**
    * @dev Returns the principal and total supply, the average borrow rate and the last supply update timestamp
    **/
-  function getSupplyData()
-    public
-    view
-    override
-    returns (
-      uint256,
-      uint256,
-      uint256,
-      uint40
-    )
-  {
+  function getSupplyData() public view override returns (uint256, uint256, uint256, uint40) {
     uint256 avgRate = _avgStableRate;
     return (super.totalSupply(), _calcTotalSupply(avgRate), avgRate, _totalSupplyTimestamp);
   }
@@ -367,15 +353,18 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
   /**
    * @dev Returns the address of the incentives controller contract
    **/
-  function getIncentivesController() external view override returns (IOmniDexIncentivesController) {
+  function getIncentivesController()
+    external
+    view
+    override
+    returns (IMeridianIncentivesController)
+  {
     return _getIncentivesController();
   }
 
-  function setIncentivesController(IOmniDexIncentivesController incentivesController)
-    external
-    override
-    onlyCurrentTreasury
-  {
+  function setIncentivesController(
+    IMeridianIncentivesController incentivesController
+  ) external override onlyCurrentTreasury {
     _incentivesController = incentivesController;
   }
 
@@ -386,7 +375,7 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
     internal
     view
     override
-    returns (IOmniDexIncentivesController)
+    returns (IMeridianIncentivesController)
   {
     return _incentivesController;
   }
@@ -417,8 +406,10 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
       return 0;
     }
 
-    uint256 cumulatedInterest =
-      MathUtils.calculateCompoundedInterest(avgRate, _totalSupplyTimestamp);
+    uint256 cumulatedInterest = MathUtils.calculateCompoundedInterest(
+      avgRate,
+      _totalSupplyTimestamp
+    );
 
     return principalSupply.rayMul(cumulatedInterest);
   }
@@ -429,11 +420,7 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
    * @param amount The amount being minted
    * @param oldTotalSupply the total supply before the minting event
    **/
-  function _mint(
-    address account,
-    uint256 amount,
-    uint256 oldTotalSupply
-  ) internal {
+  function _mint(address account, uint256 amount, uint256 oldTotalSupply) internal {
     uint256 oldAccountBalance = _balances[account];
     _balances[account] = oldAccountBalance.add(amount);
 
@@ -448,11 +435,7 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
    * @param amount The amount being burned
    * @param oldTotalSupply The total supply before the burning event
    **/
-  function _burn(
-    address account,
-    uint256 amount,
-    uint256 oldTotalSupply
-  ) internal {
+  function _burn(address account, uint256 amount, uint256 oldTotalSupply) internal {
     uint256 oldAccountBalance = _balances[account];
     _balances[account] = oldAccountBalance.sub(amount, Errors.SDT_BURN_EXCEEDS_BALANCE);
 

@@ -6,13 +6,13 @@ import {WadRayMath} from '../libraries/math/WadRayMath.sol';
 import {Errors} from '../libraries/helpers/Errors.sol';
 import {DebtTokenBase} from './base/DebtTokenBase.sol';
 import {ILendingPool} from '../../interfaces/ILendingPool.sol';
-import {IOmniDexIncentivesController} from '../../interfaces/IOmniDexIncentivesController.sol';
+import {IMeridianIncentivesController} from '../../interfaces/IMeridianIncentivesController.sol';
 
 /**
  * @title VariableDebtToken
  * @notice Implements a variable debt token to track the borrowing positions of users
  * at variable rate mode
- * @author OmniDex
+ * @author Meridian
  **/
 contract VariableDebtToken is DebtTokenBase, IVariableDebtToken {
   using WadRayMath for uint256;
@@ -22,9 +22,9 @@ contract VariableDebtToken is DebtTokenBase, IVariableDebtToken {
   ILendingPool internal _pool;
   address internal _treasury;
   address internal _underlyingAsset;
-  IOmniDexIncentivesController internal _incentivesController;
+  IMeridianIncentivesController internal _incentivesController;
 
-  modifier onlyCurrentTreasury {
+  modifier onlyCurrentTreasury() {
     require(_msgSender() == _treasury, 'Only Current Treasury');
     _;
   }
@@ -49,7 +49,7 @@ contract VariableDebtToken is DebtTokenBase, IVariableDebtToken {
   function initialize(
     ILendingPool pool,
     address underlyingAsset,
-    IOmniDexIncentivesController incentivesController,
+    IMeridianIncentivesController incentivesController,
     uint8 debtTokenDecimals,
     string memory debtTokenName,
     string memory debtTokenSymbol,
@@ -136,11 +136,7 @@ contract VariableDebtToken is DebtTokenBase, IVariableDebtToken {
    * @param amount The amount getting burned
    * @param index The variable debt index of the reserve
    **/
-  function burn(
-    address user,
-    uint256 amount,
-    uint256 index
-  ) external override onlyLendingPool {
+  function burn(address user, uint256 amount, uint256 index) external override onlyLendingPool {
     uint256 amountScaled = amount.rayDiv(index);
     require(amountScaled != 0, Errors.CT_INVALID_BURN_AMOUNT);
 
@@ -180,12 +176,9 @@ contract VariableDebtToken is DebtTokenBase, IVariableDebtToken {
    * @return The principal balance of the user
    * @return The principal total supply
    **/
-  function getScaledUserBalanceAndSupply(address user)
-    external
-    view
-    override
-    returns (uint256, uint256)
-  {
+  function getScaledUserBalanceAndSupply(
+    address user
+  ) external view override returns (uint256, uint256) {
     return (super.balanceOf(user), super.totalSupply());
   }
 
@@ -199,15 +192,18 @@ contract VariableDebtToken is DebtTokenBase, IVariableDebtToken {
   /**
    * @dev Returns the address of the incentives controller contract
    **/
-  function getIncentivesController() external view override returns (IOmniDexIncentivesController) {
+  function getIncentivesController()
+    external
+    view
+    override
+    returns (IMeridianIncentivesController)
+  {
     return _getIncentivesController();
   }
 
-  function setIncentivesController(IOmniDexIncentivesController incentivesController)
-    external
-    override
-    onlyCurrentTreasury
-  {
+  function setIncentivesController(
+    IMeridianIncentivesController incentivesController
+  ) external override onlyCurrentTreasury {
     _incentivesController = incentivesController;
   }
 
@@ -222,7 +218,7 @@ contract VariableDebtToken is DebtTokenBase, IVariableDebtToken {
     internal
     view
     override
-    returns (IOmniDexIncentivesController)
+    returns (IMeridianIncentivesController)
   {
     return _incentivesController;
   }

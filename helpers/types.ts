@@ -53,7 +53,7 @@ export enum EthereumNetworkNames {
   telos_testnet = 'telos_testnet',
 }
 
-export enum OmniDexPools {
+export enum MeridianPools {
   proto = 'proto',
   matic = 'matic',
   amm = 'amm',
@@ -77,8 +77,8 @@ export enum eContractid {
   Proxy = 'Proxy',
   MockAggregator = 'MockAggregator',
   LendingRateOracle = 'LendingRateOracle',
-  OmniDexOracle = 'OmniDexOracle',
-  OmniDexFallbackOracle = 'OmniDexFallbackOracle',
+  MeridianOracle = 'MeridianOracle',
+  MeridianFallbackOracle = 'MeridianFallbackOracle',
   DefaultReserveInterestRateStrategy = 'DefaultReserveInterestRateStrategy',
   LendingPoolCollateralManager = 'LendingPoolCollateralManager',
   InitializableAdminUpgradeabilityProxy = 'InitializableAdminUpgradeabilityProxy',
@@ -89,7 +89,7 @@ export enum eContractid {
   DelegationAwareOToken = 'DelegationAwareOToken',
   MockStableDebtToken = 'MockStableDebtToken',
   MockVariableDebtToken = 'MockVariableDebtToken',
-  OmniDexProtocolDataProvider = 'OmniDexProtocolDataProvider',
+  MeridianProtocolDataProvider = 'MeridianProtocolDataProvider',
   IERC20Detailed = 'IERC20Detailed',
   StableDebtToken = 'StableDebtToken',
   VariableDebtToken = 'VariableDebtToken',
@@ -233,8 +233,9 @@ export interface iAssetBase<T> {
   TUSD: T;
   USDC: T;
   USDT: T;
+  USDM: T;
   SUSD: T;
-  KARMA: T;
+  STLOS: T;
   BAT: T;
   MKR: T;
   LINK: T;
@@ -251,7 +252,7 @@ export interface iAssetBase<T> {
   ENJ: T;
   UniDAIWETH: T;
   UniWBTCWETH: T;
-  UniKARMAWETH: T;
+  UniSTLOSWETH: T;
   UniBATWETH: T;
   UniDAIUSDC: T;
   UniCRVWETH: T;
@@ -270,7 +271,6 @@ export interface iAssetBase<T> {
   xSUSHI: T;
   WAVAX: T;
   WTLOS: T;
-  STLOS: T;
   WBNB: T;
   WFTM: T;
 }
@@ -279,14 +279,15 @@ export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'ETH'>;
 
 export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
-export type iOmniDexPoolAssets<T> = Pick<
+export type iMeridianPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
   | 'DAI'
   | 'TUSD'
   | 'USDC'
   | 'USDT'
+  | 'USDM'
   | 'SUSD'
-  | 'KARMA'
+  | 'STLOS'
   | 'BAT'
   | 'MKR'
   | 'LINK'
@@ -309,11 +310,12 @@ export type iLpPoolAssets<T> = Pick<
   | 'DAI'
   | 'USDC'
   | 'USDT'
+  | 'USDM'
   | 'WBTC'
   | 'WETH'
   | 'UniDAIWETH'
   | 'UniWBTCWETH'
-  | 'UniKARMAWETH'
+  | 'UniSTLOSWETH'
   | 'UniBATWETH'
   | 'UniDAIUSDC'
   | 'UniCRVWETH'
@@ -331,7 +333,7 @@ export type iLpPoolAssets<T> = Pick<
 
 export type iMaticPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'KARMA'
+  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'STLOS' | 'STLOS'
 >;
 
 export type iXDAIPoolAssets<T> = Pick<
@@ -341,38 +343,28 @@ export type iXDAIPoolAssets<T> = Pick<
 
 export type iAvalanchePoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'WETH' | 'DAI' | 'USDT' | 'KARMA' | 'WBTC' | 'WAVAX' | 'USDC'
+  'WETH' | 'DAI' | 'USDT' | 'STLOS' | 'WBTC' | 'WAVAX' | 'USDC'
 >;
 
 export type iTelosPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  | 'WETH'
-  | 'USDT'
-  | 'KARMA'
-  | 'WBTC'
-  | 'WAVAX'
-  | 'USDC'
-  | 'WTLOS'
-  | 'WBNB'
-  | 'WMATIC'
-  | 'WFTM'
-  | 'STLOS'
+  'WETH' | 'USDT' | 'STLOS' | 'WBTC' | 'USDM' | 'USDC' | 'WTLOS'
 >;
 
-export type iMultiPoolsAssets<T> = iAssetCommon<T> | iOmniDexPoolAssets<T>;
+export type iMultiPoolsAssets<T> = iAssetCommon<T> | iMeridianPoolAssets<T>;
 
-export type iOmniDexPoolTokens<T> = Omit<iOmniDexPoolAssets<T>, 'ETH'>;
+export type iMeridianPoolTokens<T> = Omit<iMeridianPoolAssets<T>, 'ETH'>;
 
 export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
 export enum TokenContractId {
   DAI = 'DAI',
-  KARMA = 'KARMA',
   TUSD = 'TUSD',
   BAT = 'BAT',
   WETH = 'WETH',
   USDC = 'USDC',
   USDT = 'USDT',
+  USDM = 'USDM',
   SUSD = 'SUSD',
   ZRX = 'ZRX',
   MKR = 'MKR',
@@ -389,7 +381,7 @@ export enum TokenContractId {
   ENJ = 'ENJ',
   UniDAIWETH = 'UniDAIWETH',
   UniWBTCWETH = 'UniWBTCWETH',
-  UniKARMAWETH = 'UniKARMAWETH',
+  UniSTLOSWETH = 'UniSTLOSWETH',
   UniBATWETH = 'UniBATWETH',
   UniDAIUSDC = 'UniDAIUSDC',
   UniCRVWETH = 'UniCRVWETH',
@@ -492,11 +484,11 @@ export interface iTelosParamsPerNetwork<T> {
 }
 
 export interface iParamsPerPool<T> {
-  [OmniDexPools.proto]: T;
-  [OmniDexPools.matic]: T;
-  [OmniDexPools.amm]: T;
-  [OmniDexPools.avalanche]: T;
-  [OmniDexPools.telos]: T;
+  [MeridianPools.proto]: T;
+  [MeridianPools.matic]: T;
+  [MeridianPools.amm]: T;
+  [MeridianPools.avalanche]: T;
+  [MeridianPools.telos]: T;
 }
 
 export interface iBasicDistributionParams {
@@ -520,7 +512,7 @@ export interface IProtocolGlobalConfig {
   UsdAddress: tEthereumAddress;
   NilAddress: tEthereumAddress;
   OneAddress: tEthereumAddress;
-  OmniDexReferral: string;
+  MeridianReferral: string;
 }
 
 export interface IMocksConfig {
@@ -551,7 +543,7 @@ export interface IBaseConfiguration {
   LendingRateOracleRatesCommon: iMultiPoolsAssets<IMarketRates>;
   LendingRateOracle: iParamsPerNetwork<tEthereumAddress>;
   TokenDistributor: iParamsPerNetwork<tEthereumAddress>;
-  OmniDexOracle: iParamsPerNetwork<tEthereumAddress>;
+  MeridianOracle: iParamsPerNetwork<tEthereumAddress>;
   FallbackOracle: iParamsPerNetwork<tEthereumAddress>;
   ChainlinkAggregator: iParamsPerNetwork<ITokenAddress>;
   PoolAdmin: iParamsPerNetwork<tEthereumAddress | undefined>;
@@ -576,8 +568,8 @@ export interface ICommonConfiguration extends IBaseConfiguration {
   Mocks: IMocksConfig;
 }
 
-export interface IOmniDexConfiguration extends ICommonConfiguration {
-  ReservesConfig: iOmniDexPoolAssets<IReserveParams>;
+export interface IMeridianConfiguration extends ICommonConfiguration {
+  ReservesConfig: iMeridianPoolAssets<IReserveParams>;
 }
 
 export interface IAmmConfiguration extends ICommonConfiguration {
@@ -604,4 +596,4 @@ export interface ITokenAddress {
   [token: string]: tEthereumAddress;
 }
 
-export type PoolConfiguration = ICommonConfiguration | IOmniDexConfiguration;
+export type PoolConfiguration = ICommonConfiguration | IMeridianConfiguration;

@@ -378,25 +378,25 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
   });
 
-  it('User 4 deposits 10 KARMA - drops HF, liquidates the KARMA, which results on a lower amount being liquidated', async () => {
-    const { karma, usdc, users, pool, oracle, helpersContract } = testEnv;
+  it('User 4 deposits 10 STLOS - drops HF, liquidates the STLOS, which results on a lower amount being liquidated', async () => {
+    const { stlos, usdc, users, pool, oracle, helpersContract } = testEnv;
 
     const depositor = users[3];
     const borrower = users[4];
     const liquidator = users[5];
 
-    //mints KARMA to borrower
-    await karma.connect(borrower.signer).mint(await convertToCurrencyDecimals(karma.address, '10'));
+    //mints STLOS to borrower
+    await stlos.connect(borrower.signer).mint(await convertToCurrencyDecimals(stlos.address, '10'));
 
     //approve protocol to access the borrower wallet
-    await karma.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await stlos.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    //borrower deposits 10 KARMA
-    const amountToDeposit = await convertToCurrencyDecimals(karma.address, '10');
+    //borrower deposits 10 STLOS
+    const amountToDeposit = await convertToCurrencyDecimals(stlos.address, '10');
 
     await pool
       .connect(borrower.signer)
-      .deposit(karma.address, amountToDeposit, borrower.address, '0');
+      .deposit(stlos.address, amountToDeposit, borrower.address, '0');
     const usdcPrice = await oracle.getAssetPrice(usdc.address);
 
     //drops HF below 1
@@ -419,19 +419,19 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
 
     const usdcReserveDataBefore = await helpersContract.getReserveData(usdc.address);
-    const karmaReserveDataBefore = await helpersContract.getReserveData(karma.address);
+    const karmaReserveDataBefore = await helpersContract.getReserveData(stlos.address);
 
     const amountToLiquidate = new BigNumber(userReserveDataBefore.currentVariableDebt.toString())
       .div(2)
       .decimalPlaces(0, BigNumber.ROUND_DOWN)
       .toFixed(0);
 
-    const collateralPrice = await oracle.getAssetPrice(karma.address);
+    const collateralPrice = await oracle.getAssetPrice(stlos.address);
     const principalPrice = await oracle.getAssetPrice(usdc.address);
 
     await pool
       .connect(liquidator.signer)
-      .liquidationCall(karma.address, usdc.address, borrower.address, amountToLiquidate, false);
+      .liquidationCall(stlos.address, usdc.address, borrower.address, amountToLiquidate, false);
 
     const userReserveDataAfter = await helpersContract.getUserReserveData(
       usdc.address,
@@ -441,9 +441,9 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
     const usdcReserveDataAfter = await helpersContract.getReserveData(usdc.address);
-    const karmaReserveDataAfter = await helpersContract.getReserveData(karma.address);
+    const karmaReserveDataAfter = await helpersContract.getReserveData(stlos.address);
 
-    const karmaConfiguration = await helpersContract.getReserveConfigurationData(karma.address);
+    const karmaConfiguration = await helpersContract.getReserveConfigurationData(stlos.address);
     const collateralDecimals = karmaConfiguration.decimals.toString();
     const liquidationBonus = karmaConfiguration.liquidationBonus.toString();
 
