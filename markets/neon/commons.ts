@@ -7,7 +7,7 @@ import {
   MOCK_CHAINLINK_AGGREGATORS_PRICES,
   oneUsd,
 } from '../../helpers/constants';
-import { ICommonConfiguration, eTelosNetwork } from '../../helpers/types';
+import { ICommonConfiguration, eNeonNetwork } from '../../helpers/types';
 
 // ----------------
 // PROTOCOL GLOBAL PARAMS
@@ -54,16 +54,13 @@ export const CommonsConfig: ICommonConfiguration = {
     USDM: {
       borrowRate: oneRay.multipliedBy(0.035).toFixed(),
     },
-    STLOS: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
     WBTC: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    WAVAX: {
+    WSOL: {
       borrowRate: oneRay.multipliedBy(0.05).toFixed(), // TODO: fix borrowRate?
     },
-    WTLOS: {
+    WNEON: {
       borrowRate: oneRay.multipliedBy(0.05).toFixed(), // TODO: fix borrowRate?
     },
   },
@@ -73,100 +70,100 @@ export const CommonsConfig: ICommonConfiguration = {
 
   // If PoolAdmin/emergencyAdmin is set, will take priority over PoolAdminIndex/emergencyAdminIndex
   PoolAdmin: {
-    [eTelosNetwork.telos_mainnet]: undefined,
-    [eTelosNetwork.telos_testnet]: undefined,
+    [eNeonNetwork.neon_mainnet]: undefined,
+    [eNeonNetwork.neon_testnet]: undefined,
   },
   PoolAdminIndex: 0,
   EmergencyAdminIndex: 0,
   EmergencyAdmin: {
-    [eTelosNetwork.telos_mainnet]: undefined,
-    [eTelosNetwork.telos_testnet]: undefined,
+    [eNeonNetwork.neon_mainnet]: undefined,
+    [eNeonNetwork.neon_testnet]: undefined,
   },
   ProviderRegistry: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   ProviderRegistryOwner: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   LendingRateOracle: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   LendingPoolCollateralManager: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   LendingPoolConfigurator: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   LendingPool: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   WethGateway: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   TokenDistributor: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   MeridianOracle: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   FallbackOracle: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   ChainlinkAggregator: {
-    [eTelosNetwork.telos_mainnet]: {
+    [eNeonNetwork.neon_mainnet]: {
       WETH: ZERO_ADDRESS,
       USDT: ZERO_ADDRESS,
       USDM: ZERO_ADDRESS,
       USDC: ZERO_ADDRESS,
-      STLOS: ZERO_ADDRESS,
       WBTC: ZERO_ADDRESS,
-      WTLOS: ZERO_ADDRESS,
+      WNEON: ZERO_ADDRESS,
+      WSOL: ZERO_ADDRESS,
       USD: ZERO_ADDRESS,
     },
-    [eTelosNetwork.telos_testnet]: {
+    [eNeonNetwork.neon_testnet]: {
       WETH: ZERO_ADDRESS,
       USDT: ZERO_ADDRESS,
       USDM: ZERO_ADDRESS,
       USDC: ZERO_ADDRESS,
-      STLOS: ZERO_ADDRESS,
       WBTC: ZERO_ADDRESS,
-      WTLOS: ZERO_ADDRESS,
+      WNEON: ZERO_ADDRESS,
+      WSOL: ZERO_ADDRESS,
       USD: ZERO_ADDRESS,
     },
   },
   ReserveAssets: {
-    [eTelosNetwork.telos_mainnet]: {},
-    [eTelosNetwork.telos_testnet]: {},
+    [eNeonNetwork.neon_mainnet]: {},
+    [eNeonNetwork.neon_testnet]: {},
   },
   ReservesConfig: {},
   OTokenDomainSeparator: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eNeonNetwork.neon_mainnet]: '',
+    [eNeonNetwork.neon_testnet]: '',
   },
   WETH: {
-    [eTelosNetwork.telos_mainnet]: ZERO_ADDRESS,
-    [eTelosNetwork.telos_testnet]: ZERO_ADDRESS,
+    [eNeonNetwork.neon_mainnet]: ZERO_ADDRESS,
+    [eNeonNetwork.neon_testnet]: ZERO_ADDRESS,
   },
   WrappedNativeToken: {
-    [eTelosNetwork.telos_mainnet]: '0xD102cE6A4dB07D247fcc28F366A623Df0938CA9E', // Official WTLOS
-    [eTelosNetwork.telos_testnet]: '0xaE85Bf723A9e74d6c663dd226996AC1b8d075AA9', // Official WTLOS
+    [eNeonNetwork.neon_mainnet]: '0x202c35e517fa803b537565c40f0a6965d7204609', // Official WNEON
+    [eNeonNetwork.neon_testnet]: '0x11adc2d986e334137b9ad0a0f290771f31e9517f', // Official WNEON
   },
   ReserveFactorTreasuryAddress: {
-    [eTelosNetwork.telos_mainnet]: '0xA25bc8c1e230a476cB00f2e9c93ffC2D4e163dc5',
-    [eTelosNetwork.telos_testnet]: '0xA25bc8c1e230a476cB00f2e9c93ffC2D4e163dc5', // Self-controlled EOA for testing
+    [eNeonNetwork.neon_mainnet]: '0x1e61a5c911Ab51F98A8dFBE90C0aa42e355885C5',
+    [eNeonNetwork.neon_testnet]: '0x1e61a5c911Ab51F98A8dFBE90C0aa42e355885C5', // Self-controlled EOA for testing
   },
   IncentivesController: {
-    [eTelosNetwork.telos_mainnet]: ZERO_ADDRESS,
-    [eTelosNetwork.telos_testnet]: ZERO_ADDRESS,
+    [eNeonNetwork.neon_mainnet]: ZERO_ADDRESS,
+    [eNeonNetwork.neon_testnet]: ZERO_ADDRESS,
   },
 };

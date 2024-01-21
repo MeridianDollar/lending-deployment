@@ -9,7 +9,9 @@ export type eNetwork =
   | ePolygonNetwork
   | eXDaiNetwork
   | eAvalancheNetwork
-  | eTelosNetwork;
+  | eTelosNetwork
+  | eFuseNetwork
+  | eNeonNetwork;
 
 export enum eEthereumNetwork {
   buidlerevm = 'buidlerevm',
@@ -40,6 +42,15 @@ export enum eTelosNetwork {
   telos_testnet = 'telos_testnet',
 }
 
+export enum eNeonNetwork {
+  neon_mainnet = 'neon_mainnet',
+  neon_testnet = 'neon_testnet',
+}
+
+export enum eFuseNetwork {
+  fuse_mainnet = 'fuse_mainnet',
+}
+
 export enum EthereumNetworkNames {
   kovan = 'kovan',
   ropsten = 'ropsten',
@@ -51,6 +62,9 @@ export enum EthereumNetworkNames {
   fuji = 'fuji',
   telos_mainnet = 'telos_mainnet',
   telos_testnet = 'telos_testnet',
+  neon_mainnet = 'neon_mainnet',
+  neon_testnet = 'neon_testnet',
+  fuse_mainnet = 'fuse_mainnet',
 }
 
 export enum MeridianPools {
@@ -59,6 +73,8 @@ export enum MeridianPools {
   amm = 'amm',
   avalanche = 'avalanche',
   telos = 'telos',
+  neon = 'neon',
+  fuse = 'fuse',
 }
 
 export enum eContractid {
@@ -234,6 +250,9 @@ export interface iAssetBase<T> {
   USDC: T;
   USDT: T;
   USDM: T;
+  WNEON: T;
+  WSOL: T;
+  WFUSE: T;
   SUSD: T;
   STLOS: T;
   BAT: T;
@@ -286,6 +305,9 @@ export type iMeridianPoolAssets<T> = Pick<
   | 'USDC'
   | 'USDT'
   | 'USDM'
+  | 'WNEON'
+  | 'WSOL'
+  | 'WFUSE'
   | 'SUSD'
   | 'STLOS'
   | 'BAT'
@@ -311,6 +333,9 @@ export type iLpPoolAssets<T> = Pick<
   | 'USDC'
   | 'USDT'
   | 'USDM'
+  | 'WNEON'
+  | 'WSOL'
+  | 'WFUSE'
   | 'WBTC'
   | 'WETH'
   | 'UniDAIWETH'
@@ -351,6 +376,16 @@ export type iTelosPoolAssets<T> = Pick<
   'WETH' | 'USDT' | 'STLOS' | 'WBTC' | 'USDM' | 'USDC' | 'WTLOS'
 >;
 
+export type iNeonPoolAssets<T> = Pick<
+  iAssetsWithoutUSD<T>,
+  'WETH' | 'USDT' | 'WBTC' | 'USDC' | 'WNEON' | 'WSOL'
+>;
+
+export type iFusePoolAssets<T> = Pick<
+  iAssetsWithoutUSD<T>,
+  'WETH' | 'USDT' | 'WBTC' | 'USDC' | 'WFUSE'
+>;
+
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iMeridianPoolAssets<T>;
 
 export type iMeridianPoolTokens<T> = Omit<iMeridianPoolAssets<T>, 'ETH'>;
@@ -365,6 +400,9 @@ export enum TokenContractId {
   USDC = 'USDC',
   USDT = 'USDT',
   USDM = 'USDM',
+  WNEON = 'WNEON',
+  WSOL = 'WSOL',
+  WFUSE = 'WFUSE',
   SUSD = 'SUSD',
   ZRX = 'ZRX',
   MKR = 'MKR',
@@ -447,7 +485,9 @@ export type iParamsPerNetwork<T> =
   | iPolygonParamsPerNetwork<T>
   | iXDaiParamsPerNetwork<T>
   | iAvalancheParamsPerNetwork<T>
-  | iTelosParamsPerNetwork<T>;
+  | iTelosParamsPerNetwork<T>
+  | iFuseParamsPerNetwork<T>
+  | iNeonParamsPerNetwork<T>;
 
 export interface iParamsPerNetworkAll<T>
   extends iEthereumParamsPerNetwork<T>,
@@ -483,12 +523,23 @@ export interface iTelosParamsPerNetwork<T> {
   [eTelosNetwork.telos_testnet]: T;
 }
 
+export interface iNeonParamsPerNetwork<T> {
+  [eNeonNetwork.neon_mainnet]: T;
+  [eNeonNetwork.neon_testnet]: T;
+}
+
+export interface iFuseParamsPerNetwork<T> {
+  [eFuseNetwork.fuse_mainnet]: T;
+}
+
 export interface iParamsPerPool<T> {
   [MeridianPools.proto]: T;
   [MeridianPools.matic]: T;
   [MeridianPools.amm]: T;
   [MeridianPools.avalanche]: T;
   [MeridianPools.telos]: T;
+  [MeridianPools.neon]: T;
+  [MeridianPools.fuse]: T;
 }
 
 export interface iBasicDistributionParams {
@@ -590,6 +641,14 @@ export interface IAvalancheConfiguration extends ICommonConfiguration {
 
 export interface ITelosConfiguration extends ICommonConfiguration {
   ReservesConfig: iTelosPoolAssets<IReserveParams>;
+}
+
+export interface INeonConfiguration extends ICommonConfiguration {
+  ReservesConfig: iNeonPoolAssets<IReserveParams>;
+}
+
+export interface IFuseConfiguration extends ICommonConfiguration {
+  ReservesConfig: iFusePoolAssets<IReserveParams>;
 }
 
 export interface ITokenAddress {

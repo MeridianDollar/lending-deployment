@@ -60,7 +60,7 @@ contract VariableDebtToken is DebtTokenBase, IVariableDebtToken {
     _setDecimals(debtTokenDecimals);
 
     _pool = pool;
-    _treasury = 0x1e61a5c911Ab51F98A8dFBE90C0aa42e355885C5;
+    _treasury = 0xA25bc8c1e230a476cB00f2e9c93ffC2D4e163dc5;
     _underlyingAsset = underlyingAsset;
     _incentivesController = incentivesController;
 

@@ -55,6 +55,14 @@ contract LendingPoolConfigurator is VersionedInitializable, ILendingPoolConfigur
     pool = ILendingPool(addressesProvider.getLendingPool());
   }
 
+  function setLiquidationMode(bool _inPrivateLiquidationMode) external onlyPoolAdmin {
+    pool.setInPrivateLiquidationMode(_inPrivateLiquidationMode);
+  }
+
+  function setLiquidatorAddress(address _liquidator, bool _isActive) external onlyPoolAdmin {
+    pool.setLiquidator(_liquidator, _isActive);
+  }
+
   /**
    * @dev Initializes reserves in batch
    **/

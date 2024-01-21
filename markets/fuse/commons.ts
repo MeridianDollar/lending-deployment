@@ -7,7 +7,7 @@ import {
   MOCK_CHAINLINK_AGGREGATORS_PRICES,
   oneUsd,
 } from '../../helpers/constants';
-import { ICommonConfiguration, eTelosNetwork } from '../../helpers/types';
+import { ICommonConfiguration, eFuseNetwork } from '../../helpers/types';
 
 // ----------------
 // PROTOCOL GLOBAL PARAMS
@@ -54,16 +54,10 @@ export const CommonsConfig: ICommonConfiguration = {
     USDM: {
       borrowRate: oneRay.multipliedBy(0.035).toFixed(),
     },
-    STLOS: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
     WBTC: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    WAVAX: {
-      borrowRate: oneRay.multipliedBy(0.05).toFixed(), // TODO: fix borrowRate?
-    },
-    WTLOS: {
+    WFUSE: {
       borrowRate: oneRay.multipliedBy(0.05).toFixed(), // TODO: fix borrowRate?
     },
   },
@@ -73,100 +67,71 @@ export const CommonsConfig: ICommonConfiguration = {
 
   // If PoolAdmin/emergencyAdmin is set, will take priority over PoolAdminIndex/emergencyAdminIndex
   PoolAdmin: {
-    [eTelosNetwork.telos_mainnet]: undefined,
-    [eTelosNetwork.telos_testnet]: undefined,
+    [eFuseNetwork.fuse_mainnet]: undefined,
   },
   PoolAdminIndex: 0,
   EmergencyAdminIndex: 0,
   EmergencyAdmin: {
-    [eTelosNetwork.telos_mainnet]: undefined,
-    [eTelosNetwork.telos_testnet]: undefined,
+    [eFuseNetwork.fuse_mainnet]: undefined,
   },
   ProviderRegistry: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   ProviderRegistryOwner: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   LendingRateOracle: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   LendingPoolCollateralManager: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   LendingPoolConfigurator: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   LendingPool: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   WethGateway: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   TokenDistributor: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   MeridianOracle: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   FallbackOracle: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   ChainlinkAggregator: {
-    [eTelosNetwork.telos_mainnet]: {
+    [eFuseNetwork.fuse_mainnet]: {
       WETH: ZERO_ADDRESS,
       USDT: ZERO_ADDRESS,
       USDM: ZERO_ADDRESS,
       USDC: ZERO_ADDRESS,
-      STLOS: ZERO_ADDRESS,
       WBTC: ZERO_ADDRESS,
-      WTLOS: ZERO_ADDRESS,
-      USD: ZERO_ADDRESS,
-    },
-    [eTelosNetwork.telos_testnet]: {
-      WETH: ZERO_ADDRESS,
-      USDT: ZERO_ADDRESS,
-      USDM: ZERO_ADDRESS,
-      USDC: ZERO_ADDRESS,
-      STLOS: ZERO_ADDRESS,
-      WBTC: ZERO_ADDRESS,
-      WTLOS: ZERO_ADDRESS,
+      WFUSE: ZERO_ADDRESS,
       USD: ZERO_ADDRESS,
     },
   },
   ReserveAssets: {
-    [eTelosNetwork.telos_mainnet]: {},
-    [eTelosNetwork.telos_testnet]: {},
+    [eFuseNetwork.fuse_mainnet]: {},
   },
   ReservesConfig: {},
   OTokenDomainSeparator: {
-    [eTelosNetwork.telos_mainnet]: '',
-    [eTelosNetwork.telos_testnet]: '',
+    [eFuseNetwork.fuse_mainnet]: '',
   },
   WETH: {
-    [eTelosNetwork.telos_mainnet]: ZERO_ADDRESS,
-    [eTelosNetwork.telos_testnet]: ZERO_ADDRESS,
+    [eFuseNetwork.fuse_mainnet]: ZERO_ADDRESS,
   },
   WrappedNativeToken: {
-    [eTelosNetwork.telos_mainnet]: '0xD102cE6A4dB07D247fcc28F366A623Df0938CA9E', // Official WTLOS
-    [eTelosNetwork.telos_testnet]: '0xaE85Bf723A9e74d6c663dd226996AC1b8d075AA9', // Official WTLOS
+    [eFuseNetwork.fuse_mainnet]: '0x0BE9e53fd7EDaC9F859882AfdDa116645287C629', // Official WFUSE
   },
   ReserveFactorTreasuryAddress: {
-    [eTelosNetwork.telos_mainnet]: '0xA25bc8c1e230a476cB00f2e9c93ffC2D4e163dc5',
-    [eTelosNetwork.telos_testnet]: '0xA25bc8c1e230a476cB00f2e9c93ffC2D4e163dc5', // Self-controlled EOA for testing
+    [eFuseNetwork.fuse_mainnet]: '0x1e61a5c911Ab51F98A8dFBE90C0aa42e355885C5',
   },
   IncentivesController: {
-    [eTelosNetwork.telos_mainnet]: ZERO_ADDRESS,
-    [eTelosNetwork.telos_testnet]: ZERO_ADDRESS,
+    [eFuseNetwork.fuse_mainnet]: ZERO_ADDRESS,
   },
 };

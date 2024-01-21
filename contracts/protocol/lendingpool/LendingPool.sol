@@ -28,12 +28,12 @@ import {LendingPoolStorage} from './LendingPoolStorage.sol';
 
 /**
  * @title LendingPool contract
- * @dev Main point of interaction with an Meridian protocol's market
+ * @dev Main point of interaction with an Meridian protocol's market. 1140 372268924298293408
  * - Users can:
  *   # Deposit
- *   # Withdraw
+ *   # Withdraw. 1870 4.550083. 61416
  *   # Borrow
- *   # Repay
+ *   # Repay.  1140372410427460141468, 867 482768140537702732
  *   # Swap their loans between variable and stable rate
  *   # Enable/disable their deposits as collateral rebalance stable rate borrow positions
  *   # Liquidate positions
@@ -48,6 +48,9 @@ contract LendingPool is VersionedInitializable, ILendingPool, LendingPoolStorage
   using WadRayMath for uint256;
   using PercentageMath for uint256;
   using SafeERC20 for IERC20;
+
+  bool public inPrivateLiquidationMode = false;
+  mapping(address => bool) public isLiquidator;
 
   uint256 public constant LENDINGPOOL_REVISION = 0x2;
 
@@ -83,6 +86,19 @@ contract LendingPool is VersionedInitializable, ILendingPool, LendingPoolStorage
 
   function getRevision() internal pure override returns (uint256) {
     return LENDINGPOOL_REVISION;
+  }
+
+  function setLiquidator(
+    address _liquidator,
+    bool _isActive
+  ) external override onlyLendingPoolConfigurator {
+    isLiquidator[_liquidator] = _isActive;
+  }
+
+  function setInPrivateLiquidationMode(
+    bool _inPrivateLiquidationMode
+  ) external override onlyLendingPoolConfigurator {
+    inPrivateLiquidationMode = _inPrivateLiquidationMode;
   }
 
   /**
@@ -438,6 +454,10 @@ contract LendingPool is VersionedInitializable, ILendingPool, LendingPoolStorage
     uint256 debtToCover,
     bool receiveOToken
   ) external override whenNotPaused {
+    if (inPrivateLiquidationMode) {
+      require(isLiquidator[msg.sender], 'Private Liquidation mode');
+    }
+
     address collateralManager = _addressesProvider.getLendingPoolCollateralManager();
 
     //solium-disable-next-line

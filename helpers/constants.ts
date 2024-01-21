@@ -48,6 +48,7 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   TUSD: oneEther.multipliedBy('0.00364714136416').toFixed(),
   UNI: oneEther.multipliedBy('0.00536479').toFixed(),
   USDC: oneEther.multipliedBy('0.00367714136416').toFixed(),
+  USDM: oneEther.multipliedBy('0.00369068412860').toFixed(),
   USDT: oneEther.multipliedBy('0.00369068412860').toFixed(),
   WETH: oneEther.toFixed(),
   WBTC: oneEther.multipliedBy('47.332685').toFixed(),
@@ -73,6 +74,9 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   STAKE: oneEther.multipliedBy('0.003620948469').toFixed(),
   xSUSHI: oneEther.multipliedBy('0.00913428586').toFixed(),
   WAVAX: oneEther.multipliedBy('0.006051936629').toFixed(),
+  WSOL: oneEther.multipliedBy('0.006051936629').toFixed(),
+  WNEON: oneEther.multipliedBy('0.0002051936629').toFixed(),
+  WFUSE: oneEther.multipliedBy('0.0002051936629').toFixed(),
   WTLOS: oneEther.multipliedBy('0.006051936629').toFixed(),
   WBNB: oneEther.multipliedBy('0.006051936629').toFixed(),
   WFTM: oneEther.multipliedBy('0.006051936629').toFixed(),
@@ -92,6 +96,9 @@ export const chainlinkAggregatorProxy = {
   rinkeby: '0x8A753747A1Fa494EC906cE90E9f37563A8AF630e',
   telos_mainnet: '0x7105860E8B1d082347A4D5b3F33c3F970eAA9DD5',
   telos_testnet: '0x42e84fbE2f05D7d2403e865CcA42eC4D57CCA06C',
+  neon_mainnet: '',
+  neon_testnet: '0x5e06eA564efcB3158a85dBF0B9E017cb003ff56f',
+  fuse_mainnet: '0x9Fe3659aFf8CDaf4cd009ef7a63DaB23b3CA15C7',
 };
 
 export const chainlinkEthUsdAggregatorProxy = {
@@ -107,4 +114,7 @@ export const chainlinkEthUsdAggregatorProxy = {
   rinkeby: '0x8A753747A1Fa494EC906cE90E9f37563A8AF630e',
   telos_mainnet: '0x58C5C1c2Ec422Ae9ff2f91ee60474147d2529e46',
   telos_testnet: '0x3Fe1dc4EfCeA7B01d7701cB1CDcEA0C02a62d8ff',
+  neon_mainnet: '',
+  neon_testnet: '0x2F3b1A07E3eFb1fCc64BD09b86bD0Fa885D93552',
+  fuse_mainnet: '0x8Cf3E0e7aE4eB82237d0931388EA72D5649D76e0',
 };

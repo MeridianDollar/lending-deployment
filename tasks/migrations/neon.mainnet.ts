@@ -4,7 +4,7 @@ import { ConfigNames } from '../../helpers/configuration';
 import { printContracts } from '../../helpers/misc-utils';
 import { usingTenderly } from '../../helpers/tenderly-utils';
 
-task('telos:mainnet', 'Deploy market at Telos')
+task('neon:mainnet', 'Deploy market at Neon')
   .addParam('pool', `Market pool configuration, one of ${Object.keys(ConfigNames)}`)
   .addFlag('verify', 'Verify contracts at Etherscan')
   .addFlag('skipRegistry', 'Skip addresses provider registration at Addresses Provider Registry')

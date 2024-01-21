@@ -11,6 +11,8 @@ import { getEthersSignersAddresses, getParamPerPool } from './contracts-helpers'
 import MaticConfig from '../markets/matic';
 import AvalancheConfig from '../markets/avalanche';
 import TelosConfig from '../markets/telos';
+import NeonConfig from '../markets/neon';
+import FuseConfig from '../markets/fuse';
 import AmmConfig from '../markets/amm';
 
 // import { CommonsConfig } from '../markets/meridian/commons';
@@ -26,6 +28,8 @@ export enum ConfigNames {
   Amm = 'Amm',
   Avalanche = 'Avalanche',
   Telos = 'Telos',
+  Neon = 'Neon',
+  Fuse = 'Fuse',
 }
 
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
@@ -40,6 +44,10 @@ export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
       return AvalancheConfig;
     case ConfigNames.Telos:
       return TelosConfig;
+    case ConfigNames.Neon:
+      return NeonConfig;
+    case ConfigNames.Fuse:
+      return FuseConfig;
     case ConfigNames.Commons:
       return CommonsConfig;
     default:
@@ -72,6 +80,12 @@ export const getReservesConfigByPool = (pool: MeridianPools): iMultiPoolsAssets<
       },
       [MeridianPools.telos]: {
         ...TelosConfig.ReservesConfig,
+      },
+      [MeridianPools.neon]: {
+        ...NeonConfig.ReservesConfig,
+      },
+      [MeridianPools.fuse]: {
+        ...FuseConfig.ReservesConfig,
       },
     },
     pool

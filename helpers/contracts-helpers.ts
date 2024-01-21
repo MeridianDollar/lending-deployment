@@ -19,8 +19,12 @@ import {
   iXDaiParamsPerNetwork,
   iAvalancheParamsPerNetwork,
   iTelosParamsPerNetwork,
+  iNeonParamsPerNetwork,
+  iFuseParamsPerNetwork,
   eAvalancheNetwork,
   eTelosNetwork,
+  eNeonNetwork,
+  eFuseNetwork,
 } from './types';
 import { MintableERC20 } from '../types/MintableERC20';
 import { Artifact } from 'hardhat/types';
@@ -153,6 +157,9 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
   const { xdai } = param as iXDaiParamsPerNetwork<T>;
   const { avalanche, fuji } = param as iAvalancheParamsPerNetwork<T>;
   const { telos_mainnet, telos_testnet } = param as iTelosParamsPerNetwork<T>;
+  const { neon_mainnet, neon_testnet } = param as iNeonParamsPerNetwork<T>;
+  const { fuse_mainnet } = param as iFuseParamsPerNetwork<T>;
+
   if (process.env.FORK) {
     return param[process.env.FORK as eNetwork] as T;
   }
@@ -186,6 +193,12 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
       return telos_mainnet;
     case eTelosNetwork.telos_testnet:
       return telos_testnet;
+    case eNeonNetwork.neon_mainnet:
+      return neon_mainnet;
+    case eNeonNetwork.neon_testnet:
+      return neon_testnet;
+    case eFuseNetwork.fuse_mainnet:
+      return fuse_mainnet;
   }
 };
 

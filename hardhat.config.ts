@@ -9,6 +9,8 @@ import {
   eNetwork,
   ePolygonNetwork,
   eTelosNetwork,
+  eNeonNetwork,
+  eFuseNetwork,
   eXDaiNetwork,
 } from './helpers/types';
 import { BUIDLEREVM_CHAINID, COVERAGE_CHAINID } from './helpers/buidler-constants';
@@ -111,6 +113,9 @@ const buidlerConfig: HardhatUserConfig = {
     fuji: getCommonNetworkConfig(eAvalancheNetwork.fuji, 43113),
     telos_mainnet: getCommonNetworkConfig(eTelosNetwork.telos_mainnet, 40),
     telos_testnet: getCommonNetworkConfig(eTelosNetwork.telos_testnet, 41),
+    neon_mainnet: getCommonNetworkConfig(eNeonNetwork.neon_mainnet, 245022934),
+    neon_testnet: getCommonNetworkConfig(eNeonNetwork.neon_testnet, 245022926),
+    fuse_mainnet: getCommonNetworkConfig(eFuseNetwork.fuse_mainnet, 122),
     hardhat: {
       hardfork: 'berlin',
       blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,

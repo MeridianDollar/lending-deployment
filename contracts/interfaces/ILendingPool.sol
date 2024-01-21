@@ -293,7 +293,7 @@ interface ILendingPool {
    * @dev Allows smartcontracts to access the liquidity of the pool within one transaction,
    * as long as the amount taken plus a fee is returned.
    * IMPORTANT There are security concerns for developers of flashloan receiver contracts that must be kept into consideration.
-   * For further details please visit https://developers.meridian.finance
+   * For further details please visit https://developers.omnidex.finance
    * @param receiverAddress The address of the contract receiving the funds, implementing the IFlashLoanReceiver interface
    * @param assets The addresses of the assets being flash-borrowed
    * @param amounts The amounts amounts being flash-borrowed
@@ -354,6 +354,10 @@ interface ILendingPool {
   ) external;
 
   function setConfiguration(address reserve, uint256 configuration) external;
+
+  function setInPrivateLiquidationMode(bool _inPrivateLiquidationMode) external;
+
+  function setLiquidator(address _liquidator, bool _isActive) external;
 
   /**
    * @dev Returns the configuration of the reserve

@@ -5,6 +5,8 @@ import {
   eEthereumNetwork,
   ePolygonNetwork,
   eTelosNetwork,
+  eNeonNetwork,
+  eFuseNetwork,
   eXDaiNetwork,
   iParamsPerNetwork,
 } from './helpers/types';
@@ -58,6 +60,10 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eAvalancheNetwork.fuji]: 'https://api.avax-test.network/ext/bc/C/rpc',
   [eTelosNetwork.telos_mainnet]: 'https://mainnet.telos.net/evm',
   [eTelosNetwork.telos_testnet]: 'https://testnet.telos.net/evm',
+  [eNeonNetwork.neon_mainnet]: 'https://neon-proxy-mainnet.solana.p2p.org',
+  [eNeonNetwork.neon_testnet]: 'https://devnet.neonevm.org',
+  [eFuseNetwork.fuse_mainnet]: 'https://rpc.fuse.io',
+
 };
 
 export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
@@ -73,8 +79,12 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
   [eXDaiNetwork.xdai]: 1 * GWEI,
   [eAvalancheNetwork.avalanche]: 225 * GWEI,
   [eAvalancheNetwork.fuji]: 85 * GWEI,
+  [eNeonNetwork.neon_mainnet]: 85 * GWEI,
+  [eNeonNetwork.neon_testnet]: 100 * GWEI,
   [eTelosNetwork.telos_mainnet]: 503807803686,
   [eTelosNetwork.telos_testnet]: 503807803686,
+  [eFuseNetwork.fuse_mainnet]: 10 * GWEI,
+  
 };
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
@@ -92,4 +102,7 @@ export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
   [eAvalancheNetwork.fuji]: undefined,
   [eTelosNetwork.telos_mainnet]: undefined,
   [eTelosNetwork.telos_testnet]: undefined,
+  [eNeonNetwork.neon_mainnet]: undefined,
+  [eNeonNetwork.neon_testnet]: undefined,
+  [eFuseNetwork.fuse_mainnet]: undefined,
 };
